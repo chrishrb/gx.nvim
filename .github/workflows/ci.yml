@@ -12,10 +12,14 @@ jobs:
         run: |
           sudo apt-get update
           sudo add-apt-repository universe
+          sudo apt install libfuse2
+
+          # install neovim
           wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
           chmod u+x nvim.appimage
           sudo mv nvim.appimage /usr/bin/nvim
 
+          # install stylua
           wget https://github.com/JohnnyMorganz/StyLua/releases/download/v0.17.0/stylua-linux-x86_64.zip
           unzip stylua-linux-x86_64.zip
           sudo mv stylua /usr/bin/stylua
