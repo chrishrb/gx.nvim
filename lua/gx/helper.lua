@@ -2,8 +2,8 @@ local M = {}
 
 -- get visual selection
 local function visual_selection_range()
-  local _, csrow, cscol, _ = unpack(vim.fn.getpos "'<")
-  local _, cerow, cecol, _ = unpack(vim.fn.getpos "'>")
+  local _, csrow, cscol, _ = unpack(vim.fn.getpos("'<"))
+  local _, cerow, cecol, _ = unpack(vim.fn.getpos("'>"))
 
   if csrow < cerow or (csrow == cerow and cscol <= cecol) then
     return cscol - 1, cecol

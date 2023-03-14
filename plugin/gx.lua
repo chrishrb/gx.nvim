@@ -1,5 +1,5 @@
-if vim.fn.has "nvim-0.7.0" == 0 then
-  vim.api.nvim_err_writeln "gx.nvim requires at least nvim-0.7.0"
+if vim.fn.has("nvim-0.7.0") == 0 then
+  vim.api.nvim_err_writeln("gx.nvim requires at least nvim-0.7.0")
   return
 end
 

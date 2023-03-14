@@ -1,5 +1,5 @@
-local helper = require "gx.helper"
-local mock = require "luassert.mock"
+local helper = require("gx.helper")
+local mock = require("luassert.mock")
 
 describe("gx.nvim:", function()
   before_each(function()
@@ -11,7 +11,7 @@ describe("gx.nvim:", function()
   end)
 
   it("cursor is on url", function()
-    api_mock.nvim_win_get_cursor.on_call_with(0).returns { _, 5 }
+    api_mock.nvim_win_get_cursor.on_call_with(0).returns({ _, 5 })
 
     assert.True(helper.checkIfCursorOnUrl("n", 1, 10))
     assert.True(helper.checkIfCursorOnUrl("n", 1, 6))

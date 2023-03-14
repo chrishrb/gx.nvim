@@ -1,13 +1,13 @@
-local notfier = require "gx.notfier"
-local helper = require "gx.helper"
-local parser = require "gx.parser"
+local notfier = require("gx.notfier")
+local helper = require("gx.helper")
+local handler = require("gx.handler")
 
 local keymap = vim.keymap.set
 local sysname = vim.loop.os_uname().sysname
 local opts = { noremap = true, silent = true }
 
 if not sysname == "Darwin" or not sysname == "Linux" then
-  notfier.error "Windows is not supported at the moment"
+  notfier.error("Windows is not supported at the moment")
   return
 end
 
@@ -35,7 +35,7 @@ local function searchForUrl()
   line = helper.cutWithVisualMode(mode, line)
 
   -- search for url
-  local url = parser.getUrl(mode, line)
+  local url = handler.getUrl(mode, line)
 
   if not url then
     return
