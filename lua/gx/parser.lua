@@ -1,16 +1,26 @@
-local pattern = "[%a]*://.*%.[/?_%d%a]*"
+local helper = require("gx.helper")
 
 local M = {}
 
--- get uri from line
-function M.getUrl(line)
-  local i, j = string.find(line, pattern)
+-- find pattern in line and check if cursor on it
+local function find(line, mode, pattern, startIndex)
+  startIndex = startIndex or 1
+  local i, j = string.find(line, pattern, startIndex)
 
-  if not i then
-    return i, j, nil
+  if helper.checkIfCursorOnUrl(mode, i, j) then
+    return string.sub(line, i, j)
+  elseif not i then
+    return nil
+  else
+    return find(line, mode, pattern, j+1)
   end
+end
 
-  return i, j, string.sub(line, i, j)
+-- get url from line
+function M.getUrl(mode, line)
+  local pattern =   "[%a]*://[^)%]%[\"'`˚:,!:;{}]*%.[/?_%-%d%a]*"
+  local url = find(line, mode, pattern)
+  return url
 end
 
 -- TODO: add more parser

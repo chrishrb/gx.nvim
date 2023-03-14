@@ -13,14 +13,13 @@ local function visual_selection_range()
 end
 
 -- check that cursor on uri in normal mode
-function M.checkIfCursorOnUri(mode, i, j)
+function M.checkIfCursorOnUrl(mode, i, j)
   if mode ~= "n" then
     return true
   end
 
   local col = vim.api.nvim_win_get_cursor(0)[2]
   if i <= (col + 1) and j >= (col + 1) then
-    print(i, col, j)
     return true
   end
 

@@ -1,6 +1,6 @@
-local notfier = require "lua.gx.notfier"
-local helper = require "lua.gx.helper"
-local parser = require "lua.gx.parser"
+local notfier = require("gx.notfier")
+local helper = require("gx.helper")
+local parser = require("gx.parser")
 
 local keymap = vim.keymap.set
 local sysname = vim.loop.os_uname().sysname
@@ -35,9 +35,9 @@ local function searchForUrl()
   line = helper.cutWithVisualMode(mode, line)
 
   -- search for url
-  local i, j, url = parser.getUrl(line)
+  local url = parser.getUrl(mode, line)
 
-  if not helper.checkIfCursorOnUri(mode, i, j) then
+  if not url then
     return
   end
 
