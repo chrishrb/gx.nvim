@@ -1,0 +1,27 @@
+name: CI
+
+on: [push, pull_request]
+
+jobs:
+  tests:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Install Dependencies
+        run: |
+          sudo apt-get update
+          sudo add-apt-repository universe
+          wget https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+          chmod u+x nvim.appimage
+          sudo mv nvim.appimage /usr/bin/nvim
+
+          wget https://github.com/JohnnyMorganz/StyLua/releases/download/latest/stylua-linux-x86_64.zip
+          unzip stylua-linux-x86_64.zip
+          sudo mv stylua /usr/bin/stylua
+      - name: Setup
+        run: make prepare
+      - name: Lint
+        run: make lint
+      - name: Test
+        run: make test

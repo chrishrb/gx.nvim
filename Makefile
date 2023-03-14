@@ -1,7 +1,7 @@
 RUN=nvim --headless --noplugin -u test/spec.vim
 
 .PHONY: all
-all: prepare lint test
+all: prepare lint-fix test
 
 .PHONY: prepare
 prepare:
@@ -13,6 +13,10 @@ nvim:
 
 .PHONY: lint
 lint:
+	stylua --check .
+
+.PHONY: lint-fix
+lint-fix:
 	@echo "Linting..."
 	stylua .
 	@echo
