@@ -5,6 +5,8 @@
 ## ✨ Features
 
 * open links without `netrw`
+* normal and visual mode support
+* open links with/without an explicit protocol (e.g. `google.com` will open `https://google.com`)
 * more to come (github, jira, ..)
 
 ## ⚡️ Requirements
