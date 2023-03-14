@@ -16,7 +16,7 @@ jobs:
           chmod u+x nvim.appimage
           sudo mv nvim.appimage /usr/bin/nvim
 
-          wget https://github.com/JohnnyMorganz/StyLua/releases/download/latest/stylua-linux-x86_64.zip
+          wget https://github.com/JohnnyMorganz/StyLua/releases/download/v0.17.0/stylua-linux-x86_64.zip
           unzip stylua-linux-x86_64.zip
           sudo mv stylua /usr/bin/stylua
       - name: Setup
