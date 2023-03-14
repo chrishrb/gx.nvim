@@ -1,6 +1,6 @@
-local notfier = require("gx.notfier")
-local helper = require("gx.helper")
-local parser = require("gx.parser")
+local notfier = require "gx.notfier"
+local helper = require "gx.helper"
+local parser = require "gx.parser"
 
 local keymap = vim.keymap.set
 local sysname = vim.loop.os_uname().sysname

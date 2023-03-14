@@ -1,4 +1,4 @@
-local helper = require("gx.helper")
+local helper = require "gx.helper"
 
 local M = {}
 
@@ -12,13 +12,13 @@ local function find(line, mode, pattern, startIndex)
   elseif not i then
     return nil
   else
-    return find(line, mode, pattern, j+1)
+    return find(line, mode, pattern, j + 1)
   end
 end
 
 -- get url from line
 function M.getUrl(mode, line)
-  local pattern =   "[%a]*://[^)%]%[\"'`˚:,!:;{}]*%.[/?_%-%d%a]*"
+  local pattern = "[%a]*://[^)%]%[\"'`˚:,!:;{}]*%.[/?_%-%d%a]*"
   local url = find(line, mode, pattern)
   return url
 end
