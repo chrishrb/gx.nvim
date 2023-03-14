@@ -1,5 +1,7 @@
 # 🔗 gx.nvim
 
+![ci](https://github.com/chrishrb/gx.nvim/actions/workflows/ci.yml/badge.svg)
+
 ## ✨ Features
 
 * open links without `netrw`
