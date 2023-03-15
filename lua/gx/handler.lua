@@ -9,8 +9,10 @@ function M.getUrl(mode, line)
   local handlers = {}
   local tkeys = {}
 
+  -- ### add here new handlers
   table.insert(handlers, plugin_handler.priority, plugin_handler)
   table.insert(handlers, url_handler.priority, url_handler)
+  -- ###
 
   for k in pairs(handlers) do
     table.insert(tkeys, k)
