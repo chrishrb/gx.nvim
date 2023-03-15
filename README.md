@@ -7,6 +7,7 @@
 * open links without `netrw`
 * normal and visual mode support
 * open links with/without an explicit protocol (e.g. `google.com` will open `https://google.com`)
+* open plugins in the browser with a single command (`gx`)
 * more to come (github, jira, ..)
 
 ## ⚡️ Requirements
@@ -23,9 +24,7 @@
 require("lazy").setup({
   {
     "chrishrb/gx.nvim",
-    config = function()
-      require("gx").setup()
-    end,
+    event = { "BufEnter" },
   },
 })
 ```

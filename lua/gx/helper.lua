@@ -37,4 +37,18 @@ function M.cutWithVisualMode(mode, line)
   return string.sub(line, i + 1, j)
 end
 
+-- find pattern in line and check if cursor on it
+function M.find(line, mode, pattern, startIndex)
+  startIndex = startIndex or 1
+  local i, j = string.find(line, pattern, startIndex)
+
+  if not i then
+    return nil
+  elseif M.checkIfCursorOnUrl(mode, i, j) then
+    return string.sub(line, i, j)
+  else
+    return M.find(line, mode, pattern, j + 1)
+  end
+end
+
 return M

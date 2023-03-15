@@ -1,31 +1,33 @@
-local helper = require("gx.helper")
+local plugin_handler = require("gx.handlers.plugin")
+local url_handler = require("gx.handlers.url")
 
 local M = {}
 
--- find pattern in line and check if cursor on it
-local function find(line, mode, pattern, startIndex)
-  startIndex = startIndex or 1
-  local i, j = string.find(line, pattern, startIndex)
-
-  if helper.checkIfCursorOnUrl(mode, i, j) then
-    return string.sub(line, i, j)
-  elseif not i then
-    return nil
-  else
-    return find(line, mode, pattern, j + 1)
-  end
-end
-
--- get url from line (with and without http/s)
 function M.getUrl(mode, line)
-  local pattern = "[%a]*[:/]?[^)%]%[\"'`˚:,!:;{}%s]*%.[/?_%-%d%a]*"
-  local url = find(line, mode, pattern)
-  if url and not url:find("^http[s]?://") then
-    url = "https://" .. url
+  local url
+  local filetype = vim.bo.filetype
+  local handlers = {}
+  local tkeys = {}
+
+  table.insert(handlers, plugin_handler.priority, plugin_handler)
+  table.insert(handlers, url_handler.priority, url_handler)
+
+  for k in pairs(handlers) do
+    table.insert(tkeys, k)
   end
+  table.sort(tkeys)
+
+  for _, k in ipairs(tkeys) do
+    if not handlers[k].filetype or handlers[k].filetype == filetype then
+      url = handlers[k].handle(mode, line)
+    end
+
+    if url then
+      break
+    end
+  end
+
   return url
 end
-
--- TODO: add more parser
 
 return M
