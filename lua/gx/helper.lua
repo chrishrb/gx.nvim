@@ -13,7 +13,7 @@ local function visual_selection_range()
 end
 
 -- check that cursor on uri in normal mode
-function M.checkIfCursorOnUrl(mode, i, j)
+function M.check_if_cursor_on_url(mode, i, j)
   if mode ~= "n" then
     return true
   end
@@ -27,7 +27,7 @@ function M.checkIfCursorOnUrl(mode, i, j)
 end
 
 -- cut line if in visual mode
-function M.cutWithVisualMode(mode, line)
+function M.cut_with_visual_mode(mode, line)
   if mode ~= "v" then
     return line
   end
@@ -44,10 +44,19 @@ function M.find(line, mode, pattern, startIndex)
 
   if not i then
     return nil
-  elseif M.checkIfCursorOnUrl(mode, i, j) then
+  elseif M.check_if_cursor_on_url(mode, i, j) then
     return string.sub(line, i, j)
   else
     return M.find(line, mode, pattern, j + 1)
+  end
+end
+
+-- ternary operator for lua
+function M.ternary(cond, T, F)
+  if cond then
+    return T
+  else
+    return F
   end
 end
 

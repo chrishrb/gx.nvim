@@ -3,15 +3,32 @@ local url_handler = require("gx.handlers.url")
 
 local M = {}
 
-function M.getUrl(mode, line)
+local function is_correct_filetype(handler_filetype, file_filetype)
+  if not handler_filetype then
+    return true
+  end
+  if handler_filetype == file_filetype then
+    return true
+  end
+  return false
+end
+
+local function add_handler(handlers, handler, file_filetype, active)
+  if not active or not is_correct_filetype(handler.filetype, file_filetype) then
+    return
+  end
+  table.insert(handlers, handler)
+end
+
+-- handler function
+function M.get_url(mode, line, file_filetype, activated_handlers)
   local url
-  local filetype = vim.bo.filetype
   local handlers = {}
   local tkeys = {}
 
   -- ### add here new handlers
-  table.insert(handlers, plugin_handler.priority, plugin_handler)
-  table.insert(handlers, url_handler.priority, url_handler)
+  add_handler(handlers, plugin_handler, file_filetype, activated_handlers.plugin)
+  add_handler(handlers, url_handler, file_filetype, true)
   -- ###
 
   for k in pairs(handlers) do
@@ -20,9 +37,7 @@ function M.getUrl(mode, line)
   table.sort(tkeys)
 
   for _, k in ipairs(tkeys) do
-    if not handlers[k].filetype or handlers[k].filetype == filetype then
-      url = handlers[k].handle(mode, line)
-    end
+    url = handlers[k].handle(mode, line)
 
     if url then
       break

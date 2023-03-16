@@ -7,6 +7,5 @@ end
 if vim.g.loaded_gx == 1 then
   return
 end
-vim.g.loaded_gx = 1
 
-require("gx").setup()
+vim.g.loaded_gx = 1

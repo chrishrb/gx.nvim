@@ -25,6 +25,15 @@ require("lazy").setup({
   {
     "chrishrb/gx.nvim",
     event = { "BufEnter" },
+    config = true, -- default settings
+
+    -- you can specify also another config if you want
+    config = function() require("gx").setup {
+      open_browser_app = "os_specific", -- specify your browser app; default for macos is "open" and for linux "xdg-open"
+      handlers = {
+        plugin = true,
+      },
+    } end,
   },
 })
 ```
@@ -36,3 +45,7 @@ require("lazy").setup({
 ## 🚀 Usage
 
 When your cursor is over a link or you mark a link or part of a link with the visual mode, you can press `gx` to open the link in the browser.
+
+## 📄 Acknowledgement
+
+* Source code of `shell.lua` is partly from [lua-shell](https://github.com/ncopa/lua-shell)
