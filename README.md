@@ -7,8 +7,8 @@
 * open links without `netrw`
 * normal and visual mode support
 * open links with/without an explicit protocol (e.g. `google.com` will open `https://google.com`)
-* open plugins in the browser with a single command (`gx`)
-* more to come (github, jira, ..)
+* open plugins in the browser with a single command (e.g. in lazy you can hover over a plugin name, simply press `gx` and you get to the github page of the plugin)
+* more to come (github issues, jira, ..)
 
 ## ⚡️ Requirements
 
@@ -46,6 +46,6 @@ require("lazy").setup({
 
 When your cursor is over a link or you mark a link or part of a link with the visual mode, you can press `gx` to open the link in the browser.
 
-## 📄 Acknowledgement
+## 📄 Acknowledgements
 
 * Source code of `shell.lua` is partly from [lua-shell](https://github.com/ncopa/lua-shell)
