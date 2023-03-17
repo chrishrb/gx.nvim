@@ -8,7 +8,7 @@ local function parse_git_output(result)
   if domain and repository then
     return "https://" .. domain .. "/" .. repository
   end
-  local _, _, url = string.find(result, "origin\t(.*)")
+  local _, _, url = string.find(result, "origin\t(.*)%s")
   if url then
     return url
   end
