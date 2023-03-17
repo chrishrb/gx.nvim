@@ -7,7 +7,7 @@
 * open links without `netrw`
 * normal and visual mode support
 * open links with/without an explicit protocol (e.g. `google.com` will open `https://google.com`)
-* open plugins in the browser with a single command (e.g. in lazy you can hover over a plugin name, simply press `gx` and you get to the github page of the plugin)
+* open plugins in the browser with a single command (e.g. in lazy, packer you can hover over a plugin name, simply press `gx` and you get to the github page of the plugin)
 * open github issues directly in the browser (e.g. `Fixes #22` opens `https://github.com/chrishrb/gx.nvim/issues/22`)
 * more to come (jira issues, ..)
 
@@ -32,7 +32,8 @@ require("lazy").setup({
     config = function() require("gx").setup {
       open_browser_app = "os_specific", -- specify your browser app; default for macos is "open" and for linux "xdg-open"
       handlers = {
-        plugin = true,
+        plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
+        github = true, -- open github issues
       },
     } end,
   },
