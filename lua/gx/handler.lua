@@ -1,5 +1,6 @@
 local plugin_handler = require("gx.handlers.plugin")
 local url_handler = require("gx.handlers.url")
+local github_handler = require("gx.handlers.github")
 
 local M = {}
 
@@ -28,6 +29,7 @@ function M.get_url(mode, line, file_filetype, activated_handlers)
 
   -- ### add here new handlers
   add_handler(handlers, plugin_handler, file_filetype, activated_handlers.plugin)
+  add_handler(handlers, github_handler, file_filetype, activated_handlers.github)
   add_handler(handlers, url_handler, file_filetype, true)
   -- ###
 

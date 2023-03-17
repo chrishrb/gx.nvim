@@ -8,7 +8,8 @@
 * normal and visual mode support
 * open links with/without an explicit protocol (e.g. `google.com` will open `https://google.com`)
 * open plugins in the browser with a single command (e.g. in lazy you can hover over a plugin name, simply press `gx` and you get to the github page of the plugin)
-* more to come (github issues, jira, ..)
+* open github issues directly in the browser (e.g. `Fixes #22` opens `https://github.com/chrishrb/gx.nvim/issues/22`)
+* more to come (jira issues, ..)
 
 ## ⚡️ Requirements
 

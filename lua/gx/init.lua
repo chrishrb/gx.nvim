@@ -63,6 +63,7 @@ local function with_defaults(options)
     open_browser_app = options.open_browser_app or get_open_browser_app(),
     handlers = {
       plugin = helper.ternary(options.handlers.plugin ~= nil, options.handlers.plugin, true),
+      github = helper.ternary(options.handlers.github ~= nil, options.handlers.github, true),
     },
   }
 end

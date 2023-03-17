@@ -1,6 +1,6 @@
 local handler = require("gx.handlers.plugin")
 
-describe("plugin_parser_does_work", function()
+describe("plugin_handler_does_work", function()
   it("plugin", function()
     assert.equals("https://github.com/user/example", handler.handle("v", '"user/example"'))
     assert.equals(

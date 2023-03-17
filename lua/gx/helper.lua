@@ -40,12 +40,12 @@ end
 -- find pattern in line and check if cursor on it
 function M.find(line, mode, pattern, startIndex)
   startIndex = startIndex or 1
-  local i, j = string.find(line, pattern, startIndex)
+  local i, j, value = string.find(line, pattern, startIndex)
 
   if not i then
     return nil
   elseif M.check_if_cursor_on_url(mode, i, j) then
-    return string.sub(line, i, j)
+    return value
   else
     return M.find(line, mode, pattern, j + 1)
   end
