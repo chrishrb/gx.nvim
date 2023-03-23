@@ -51,3 +51,4 @@ When your cursor is over a link or you mark a link or part of a link with the vi
 ## 📄 Acknowledgements
 
 * Source code of `shell.lua` is partly from [lua-shell](https://github.com/ncopa/lua-shell)
+* lua functions library [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)

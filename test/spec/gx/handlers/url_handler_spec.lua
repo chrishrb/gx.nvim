@@ -17,6 +17,10 @@ describe("url_parser_does_work", function()
         "This is [github](https://github.com), where you can get open source software."
       )
     )
+    assert.equals(
+      "http://localhost/api/v1/bla",
+      handler.handle("v", "[url](http://localhost/api/v1/bla)")
+    )
   end)
 
   it("urls in python", function()
