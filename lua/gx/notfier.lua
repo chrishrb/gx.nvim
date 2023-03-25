@@ -6,15 +6,15 @@ function M.t(str)
 end
 
 function M.warn(msg)
-  vim.notify(msg, vim.log.levels.WARN, { title = name or "Warning" })
+  vim.notify(name .. ": " .. msg, vim.log.levels.WARN, { title = name or "Warning" })
 end
 
 function M.error(msg)
-  vim.notify(msg, vim.log.levels.ERROR, { title = name or "Error Message" })
+  vim.notify(name .. ": " .. msg, vim.log.levels.ERROR, { title = name or "Error Message" })
 end
 
 function M.info(msg)
-  vim.notify(msg, vim.log.levels.INFO, { title = name or "Information" })
+  vim.notify(name .. ": " .. msg, vim.log.levels.INFO, { title = name or "Information" })
 end
 
 return M

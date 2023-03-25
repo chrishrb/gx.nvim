@@ -1,22 +1,27 @@
+local Job = require("plenary.job")
+local notfier = require("gx.notfier")
 local shell = {}
 
-local function escape(args)
-  local ret = {}
-  for _, a in pairs(args) do
-    local s = tostring(a)
-    if s:match("[^A-Za-z0-9_/:=-]") then
-      s = "'" .. s:gsub("'", "'\\''") .. "'"
-    end
-    table.insert(ret, s)
-  end
-  table.insert(ret, "&> /dev/null")
-  return table.concat(ret, " ")
+function shell.execute(command, args)
+  local result, return_val = Job:new({
+    command = command,
+    args = args,
+  }):sync()
+
+  return return_val, result
 end
 
--- escape command and execute
-function shell.execute(args)
-  local command = escape(args)
-  return command, os.execute(command)
+function shell.execute_with_error(command, args)
+  local return_val, _ = shell.execute(command, args)
+
+  if return_val ~= 0 then
+    local ret = {}
+    for _, a in pairs(args) do
+      table.insert(ret, a)
+    end
+    notfier.error('Command "' .. command .. " " .. table.concat(ret, " ") .. '" not successful.')
+    return
+  end
 end
 
 return shell
