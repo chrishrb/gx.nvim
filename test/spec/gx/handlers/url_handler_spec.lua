@@ -5,6 +5,12 @@ describe("url_parser_does_work", function()
     assert.equals("https://github.com", handler.handle("v", "https://github.com"))
     assert.equals("http://github.com", handler.handle("v", "http://github.com"))
     assert.equals("https://github.com", handler.handle("v", "github.com"))
+
+    assert.equals("https://example.hello.github.com/chrishrb/gx.nvim/#-installation", handler.handle("v", "https://example.hello.github.com/chrishrb/gx.nvim/#-installation"))
+    assert.equals("https://example.hello.github.com/chrishrb/gx.nvim/#-installation", handler.handle("v", "example.hello.github.com/chrishrb/gx.nvim/#-installation"))
+    assert.equals("https://github.com/chrishrb/gx.nvim/#-installation", handler.handle("v", "https://github.com/chrishrb/gx.nvim/#-installation"))
+    assert.equals("http://github.com/chrishrb/gx.nvim/#-installation", handler.handle("v", "http://github.com/chrishrb/gx.nvim/#-installation"))
+    assert.equals("https://github.com/chrishrb/gx.nvim/#-installation", handler.handle("v", "github.com/chrishrb/gx.nvim/#-installation"))
   end)
 
   it("urls in markdown", function()
