@@ -8,14 +8,6 @@ local sysname = vim.loop.os_uname().sysname
 
 local M = {}
 
--- execute command on macOS and linux
-local function execute_command(uri)
-  local command, ok = shell.execute({ M.options.open_browser_app, uri })
-  if ok ~= 0 then
-    notfier.error('Command "' .. command .. '" not successful.')
-  end
-end
-
 -- search for url with handler
 local function search_for_url()
   local line = vim.api.nvim_get_current_line()
@@ -32,7 +24,7 @@ local function search_for_url()
     return
   end
 
-  execute_command(url)
+  shell.execute(M.options.open_browser_app, { url })
 end
 
 -- create keybindings
