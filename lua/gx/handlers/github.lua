@@ -10,10 +10,14 @@ M.filetype = nil
 function M.handle(mode, line)
   local pattern = "%a*%s#(%d*)"
   local github_issue = helper.find(line, mode, pattern)
-  if github_issue then
-    local git_url = git.get_remote_url()
-    return git_url .. "/issues/" .. github_issue
+  if not github_issue then
+    return
   end
+  local git_url = git.get_remote_url()
+  if not git_url then
+    return
+  end
+  return git_url .. "/issues/" .. github_issue
 end
 
 return M

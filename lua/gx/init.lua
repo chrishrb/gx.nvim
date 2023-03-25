@@ -24,7 +24,7 @@ local function search_for_url()
     return
   end
 
-  shell.execute(M.options.open_browser_app, { url })
+  shell.execute_with_error(M.options.open_browser_app, { url })
 end
 
 -- create keybindings
