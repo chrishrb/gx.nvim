@@ -1,5 +1,5 @@
 local Job = require("plenary.job")
-local notfier = require "gx.notfier"
+local notfier = require("gx.notfier")
 local shell = {}
 
 function shell.execute(command, args)
