@@ -9,12 +9,12 @@ local function parse_git_output(result)
     return
   end
 
-  local _, _, domain, repository = string.find(result, "^origin\t.*git@(.*%..*):(.*/.*).git")
+  local _, _, domain, repository = string.find(result[1], "^origin\t.*git@(.*%..*):(.*/.*).git")
   if domain and repository then
     return "https://" .. domain .. "/" .. repository
   end
 
-  local _, _, url = string.find(result, "origin\t(.*)%s")
+  local _, _, url = string.find(result[1], "origin\t(.*)%s")
   if url then
     return url
   end
