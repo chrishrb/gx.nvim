@@ -7,7 +7,11 @@ local github_handler = require("gx.handlers.github")
 local M = {}
 
 local function add_handler(handlers, handler, active)
-  if not active or not helper.check_filetype(handler.filetype) or not helper.check_filename(handler.filename) then
+  if
+    not active
+    or not helper.check_filetype(handler.filetype)
+    or not helper.check_filename(handler.filename)
+  then
     return
   end
   table.insert(handlers, handler)

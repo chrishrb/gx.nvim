@@ -55,7 +55,11 @@ local function with_defaults(options)
     handlers = {
       plugin = helper.ternary(options.handlers.plugin ~= nil, options.handlers.plugin, true),
       github = helper.ternary(options.handlers.github ~= nil, options.handlers.github, true),
-      package_json = helper.ternary(options.handlers.package_json ~= nil, options.handlers.package_json, true),
+      package_json = helper.ternary(
+        options.handlers.package_json ~= nil,
+        options.handlers.package_json,
+        true
+      ),
     },
   }
 end

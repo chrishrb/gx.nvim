@@ -60,7 +60,6 @@ function M.ternary(cond, T, F)
   end
 end
 
-
 -- check for filetype
 function M.check_filetype(handler_filetype)
   local file_filetype = vim.bo.filetype
@@ -75,7 +74,7 @@ end
 
 -- get filename
 function M.get_filename()
-  return vim.fn.expand('%:t')
+  return vim.fn.expand("%:t")
 end
 
 -- check for filename
