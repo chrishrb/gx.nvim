@@ -6,9 +6,10 @@
 
 * open links without `netrw`
 * normal and visual mode support
-* open links with/without an explicit protocol (e.g. `google.com` will open `https://google.com`)
+* links with/without an explicit protocol (e.g. `google.com` will open `https://google.com`)
 * open plugins in the browser with a single command (e.g. in lazy, packer you can hover over a plugin name, simply press `gx` and you get to the github page of the plugin)
 * open github issues directly in the browser (e.g. `Fixes #22` opens `https://github.com/chrishrb/gx.nvim/issues/22`)
+* plugins from `package.json` (e.g. line `"express": "^4.18.2",` in the `package.json` opens `https://www.npmjs.com/package/vue-router`)
 * more to come (jira issues, ..)
 
 ## ⚡️ Requirements
@@ -26,6 +27,7 @@ require("lazy").setup({
   {
     "chrishrb/gx.nvim",
     event = { "BufEnter" },
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = true, -- default settings
 
     -- you can specify also another config if you want
@@ -34,6 +36,7 @@ require("lazy").setup({
       handlers = {
         plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
         github = true, -- open github issues
+        package_json = true, -- open plugins from package.json
       },
     } end,
   },
@@ -50,5 +53,4 @@ When your cursor is over a link or you mark a link or part of a link with the vi
 
 ## 📄 Acknowledgements
 
-* Source code of `shell.lua` is partly from [lua-shell](https://github.com/ncopa/lua-shell)
 * lua functions library [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
