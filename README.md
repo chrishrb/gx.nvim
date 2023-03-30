@@ -9,7 +9,7 @@
 * links with/without an explicit protocol (e.g. `google.com` will open `https://google.com`)
 * open plugins in the browser with a single command (e.g. in lazy, packer you can hover over a plugin name, simply press `gx` and you get to the github page of the plugin)
 * open github issues directly in the browser (e.g. `Fixes #22` opens `https://github.com/chrishrb/gx.nvim/issues/22`)
-* plugins from `package.json` (e.g. line `"express": "^4.18.2",` in the `package.json` opens `https://www.npmjs.com/package/vue-router`)
+* dependencies from `package.json` (e.g. line `"express": "^4.18.2",` in the `package.json` opens `https://www.npmjs.com/package/vue-router`)
 * more to come (jira issues, ..)
 
 ## ⚡️ Requirements
@@ -36,7 +36,7 @@ require("lazy").setup({
       handlers = {
         plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
         github = true, -- open github issues
-        package_json = true, -- open plugins from package.json
+        package_json = true, -- open dependencies from package.json
       },
     } end,
   },
