@@ -12,13 +12,12 @@ local M = {}
 local function search_for_url()
   local line = vim.api.nvim_get_current_line()
   local mode = vim.api.nvim_get_mode().mode
-  local filetype = vim.bo.filetype
 
   -- cut if in visual mode
   line = helper.cut_with_visual_mode(mode, line)
 
   -- search for url
-  local url = handler.get_url(mode, line, filetype, M.options.handlers)
+  local url = handler.get_url(mode, line, M.options.handlers)
 
   if not url then
     return
@@ -56,6 +55,7 @@ local function with_defaults(options)
     handlers = {
       plugin = helper.ternary(options.handlers.plugin ~= nil, options.handlers.plugin, true),
       github = helper.ternary(options.handlers.github ~= nil, options.handlers.github, true),
+      package_json = helper.ternary(options.handlers.package_json ~= nil, options.handlers.package_json, true),
     },
   }
 end
