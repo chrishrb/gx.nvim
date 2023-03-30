@@ -2,7 +2,9 @@ local helper = require("gx.helper")
 
 local M = {}
 
+-- every filename but only lua
 M.filetype = "lua"
+M.filename = nil
 
 -- navigate to neovim github plugin url
 function M.handle(mode, line)

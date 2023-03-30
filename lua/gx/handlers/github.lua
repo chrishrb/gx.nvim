@@ -3,8 +3,9 @@ local git = require("gx.git")
 
 local M = {}
 
--- every filetype
+-- every filetype and filename
 M.filetype = nil
+M.filename = nil
 
 -- navigate to neovim github plugin url
 function M.handle(mode, line)

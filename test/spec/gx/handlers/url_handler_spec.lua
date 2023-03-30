@@ -26,6 +26,13 @@ describe("url_parser_does_work", function()
       "https://github.com/chrishrb/gx.nvim/#-installation",
       handler.handle("v", "github.com/chrishrb/gx.nvim/#-installation")
     )
+    assert.equals(
+      "https://signin.aws.amazon.com/switchrole?roleName=my-role&account=111111111",
+      handler.handle(
+        "v",
+        "https://signin.aws.amazon.com/switchrole?roleName=my-role&account=111111111"
+      )
+    )
   end)
 
   it("urls in markdown", function()

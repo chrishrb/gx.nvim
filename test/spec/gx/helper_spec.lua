@@ -3,15 +3,15 @@ local mock = require("luassert.mock")
 
 describe("gx.nvim:", function()
   before_each(function()
-    get_filetype_mock = mock(vim.api, true)
+    m = mock(vim.api, true)
   end)
 
   after_each(function()
-    mock.revert(get_filetype_mock)
+    mock.revert(m)
   end)
 
   it("cursor is on url", function()
-    get_filetype_mock.nvim_win_get_cursor.on_call_with(0).returns({ _, 5 })
+    m.nvim_win_get_cursor.on_call_with(0).returns({ _, 5 })
 
     assert.True(helper.check_if_cursor_on_url("n", 1, 10))
     assert.True(helper.check_if_cursor_on_url("n", 1, 6))

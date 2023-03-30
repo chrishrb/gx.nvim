@@ -60,4 +60,33 @@ function M.ternary(cond, T, F)
   end
 end
 
+-- check for filetype
+function M.check_filetype(handler_filetype)
+  local file_filetype = vim.bo.filetype
+  if not handler_filetype then
+    return true
+  end
+  if handler_filetype == file_filetype then
+    return true
+  end
+  return false
+end
+
+-- get filename
+function M.get_filename()
+  return vim.fn.expand("%:t")
+end
+
+-- check for filename
+function M.check_filename(handler_filename)
+  local filename = M.get_filename()
+  if not handler_filename then
+    return true
+  end
+  if handler_filename == filename then
+    return true
+  end
+  return false
+end
+
 return M

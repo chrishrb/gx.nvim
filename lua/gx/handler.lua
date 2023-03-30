@@ -1,36 +1,33 @@
+local helper = require("gx.helper")
+local package_json_handler = require("gx.handlers.package_json")
 local plugin_handler = require("gx.handlers.plugin")
 local url_handler = require("gx.handlers.url")
 local github_handler = require("gx.handlers.github")
 
 local M = {}
 
-local function is_correct_filetype(handler_filetype, file_filetype)
-  if not handler_filetype then
-    return true
-  end
-  if handler_filetype == file_filetype then
-    return true
-  end
-  return false
-end
-
-local function add_handler(handlers, handler, file_filetype, active)
-  if not active or not is_correct_filetype(handler.filetype, file_filetype) then
+local function add_handler(handlers, handler, active)
+  if
+    not active
+    or not helper.check_filetype(handler.filetype)
+    or not helper.check_filename(handler.filename)
+  then
     return
   end
   table.insert(handlers, handler)
 end
 
 -- handler function
-function M.get_url(mode, line, file_filetype, activated_handlers)
+function M.get_url(mode, line, activated_handlers)
   local url
   local handlers = {}
   local tkeys = {}
 
   -- ### add here new handlers
-  add_handler(handlers, plugin_handler, file_filetype, activated_handlers.plugin)
-  add_handler(handlers, github_handler, file_filetype, activated_handlers.github)
-  add_handler(handlers, url_handler, file_filetype, true)
+  add_handler(handlers, package_json_handler, activated_handlers.package_json)
+  add_handler(handlers, plugin_handler, activated_handlers.plugin)
+  add_handler(handlers, github_handler, activated_handlers.github)
+  add_handler(handlers, url_handler, true)
   -- ###
 
   for k in pairs(handlers) do
