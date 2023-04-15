@@ -3,7 +3,7 @@ local helper = require("gx.helper")
 local M = {}
 
 -- only package.json
-M.filetype = "json"
+M.filetype = { "json" }
 M.filename = "package.json"
 
 -- navigate to neovim github plugin url
