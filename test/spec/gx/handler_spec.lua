@@ -47,6 +47,23 @@ describe("test handler", function()
     )
   end)
 
+  it("plugin handler on and filetype vim", function()
+    activated_handlers.github = true
+
+    -- mock filetype
+    vim.bo.filetype = "vim"
+
+    assert.equals("https://github.com", handler.get_url("v", "github.com", activated_handlers))
+    assert.equals(
+      "https://github.com",
+      handler.get_url("v", "https://github.com", activated_handlers)
+    )
+    assert.equals(
+      "https://github.com/example_user/example_plugin",
+      handler.get_url("v", '"example_user/example_plugin"', activated_handlers)
+    )
+  end)
+
   it("plugin handler on wrong filetype", function()
     activated_handlers.plugin = true
 
@@ -61,7 +78,7 @@ describe("test handler", function()
     assert.equals(nil, handler.get_url("v", '"example_user/example_plugin"', activated_handlers))
   end)
 
-  it("plugin handler on", function()
+  it("github handler on", function()
     activated_handlers.github = true
 
     -- mock filetype

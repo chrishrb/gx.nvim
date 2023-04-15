@@ -12,6 +12,16 @@ local function visual_selection_range()
   end
 end
 
+local function table_contains(tbl, x)
+  local found = false
+  for _, v in pairs(tbl) do
+    if v == x then
+      found = true
+    end
+  end
+  return found
+end
+
 -- check that cursor on uri in normal mode
 function M.check_if_cursor_on_url(mode, i, j)
   if mode ~= "n" then
@@ -66,7 +76,7 @@ function M.check_filetype(handler_filetype)
   if not handler_filetype then
     return true
   end
-  if handler_filetype == file_filetype then
+  if table_contains(handler_filetype, file_filetype) then
     return true
   end
   return false
