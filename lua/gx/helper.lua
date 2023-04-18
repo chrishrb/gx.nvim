@@ -29,6 +29,7 @@ function M.check_if_cursor_on_url(mode, i, j)
   end
 
   local col = vim.api.nvim_win_get_cursor(0)[2]
+  print(col)
   if i <= (col + 1) and j >= (col + 1) then
     return true
   end
