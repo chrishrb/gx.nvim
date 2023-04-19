@@ -2,7 +2,7 @@ local handler = require("gx.handlers.commit")
 
 describe("commit_handler_does_work", function()
   it("doesn't see a hash with < 7 characters", function()
-    assert.equals(nil, handler.handle("v", "1a2b3c"))
+    assert.is_nil(handler.handle("v", "1a2b3c"))
   end)
 
   it("does see a hash with 7 characters", function()
