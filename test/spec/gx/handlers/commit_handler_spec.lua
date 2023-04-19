@@ -6,11 +6,17 @@ describe("commit_handler_does_work", function()
   end)
 
   it("does see a hash with 7 characters", function()
-    assert.equals("https://github.com/chrishrb/gx.nvim/commit/1a2b3c4", handler.handle("v", "1a2b3c4"))
+    assert.equals(
+      "https://github.com/chrishrb/gx.nvim/commit/1a2b3c4",
+      handler.handle("v", "1a2b3c4")
+    )
   end)
 
   it("does see a hash with 10 characters", function()
-    assert.equals("https://github.com/chrishrb/gx.nvim/commit/1a2b3c4d5f", handler.handle("v", "1a2b3c4d5f"))
+    assert.equals(
+      "https://github.com/chrishrb/gx.nvim/commit/1a2b3c4d5f",
+      handler.handle("v", "1a2b3c4d5f")
+    )
   end)
 
   it("does see a hash with 40 characters", function()
