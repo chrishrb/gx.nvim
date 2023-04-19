@@ -25,6 +25,6 @@ describe("commit_handler_does_work", function()
   end)
 
   it("doesn't see a hash with > 40 characters", function()
-    assert.equals(nil, handler.handle("v", "1a2b3c4d5f1a2b3c4d5f1a2b3c4d5f1a2b3c4d5fa"))
+    assert.is_nil(handler.handle("v", "1a2b3c4d5f1a2b3c4d5f1a2b3c4d5f1a2b3c4d5fa"))
   end)
 end)
