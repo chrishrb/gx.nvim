@@ -3,6 +3,7 @@ local package_json_handler = require("gx.handlers.package_json")
 local plugin_handler = require("gx.handlers.plugin")
 local url_handler = require("gx.handlers.url")
 local github_handler = require("gx.handlers.github")
+local commit_handler = require("gx.handlers.commit")
 local markdown_handler = require("gx.handlers.markdown")
 
 local M = {}
@@ -28,6 +29,7 @@ function M.get_url(mode, line, activated_handlers)
   add_handler(handlers, package_json_handler, activated_handlers.package_json)
   add_handler(handlers, plugin_handler, activated_handlers.plugin)
   add_handler(handlers, github_handler, activated_handlers.github)
+  add_handler(handlers, commit_handler, activated_handlers.github)
   add_handler(handlers, markdown_handler, true)
   add_handler(handlers, url_handler, true)
   -- ###
