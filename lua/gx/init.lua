@@ -23,7 +23,10 @@ local function search_for_url()
     return
   end
 
-  shell.execute_with_error(M.options.open_browser_app, { url })
+  local args = M.options.open_browser_args
+  table.insert(args, url)
+
+  shell.execute_with_error(M.options.open_browser_app, args)
 end
 
 -- create keybindings
@@ -52,6 +55,7 @@ local function with_defaults(options)
 
   return {
     open_browser_app = options.open_browser_app or get_open_browser_app(),
+    open_browser_args = options.open_browser_args or {},
     handlers = {
       plugin = helper.ternary(options.handlers.plugin ~= nil, options.handlers.plugin, true),
       github = helper.ternary(options.handlers.github ~= nil, options.handlers.github, true),

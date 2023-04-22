@@ -15,9 +15,9 @@
 ## ⚡️ Requirements
 
 * Neovim >= 0.5.0
-* macOS (`open`) or linux (`xdg-open`)
+* macOS (`open`) or Linux (`xdg-open`)
 
-## 📦 Installation 
+## 📦 Installation
 
 ### [lazy.nvim](https://github.com/folke/lazy.nvim)
 
@@ -32,7 +32,8 @@ require("lazy").setup({
 
     -- you can specify also another config if you want
     config = function() require("gx").setup {
-      open_browser_app = "os_specific", -- specify your browser app; default for macos is "open" and for linux "xdg-open"
+      open_browser_app = "os_specific", -- specify your browser app; default for macOS is "open" and for Linux "xdg-open"
+      open_browser_args = { "--background" }, -- specify any arguments, such as --background for macOS' "open".
       handlers = {
         plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
         github = true, -- open github issues
@@ -45,7 +46,7 @@ require("lazy").setup({
 
 ## ⌨️ Mappings
 
-* `gx` is overriden by default
+* `gx` is overridden by default
 
 ## 🚀 Usage
 
