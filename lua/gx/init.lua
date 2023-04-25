@@ -23,7 +23,10 @@ local function search_for_url()
     return
   end
 
-  local args = M.options.open_browser_args
+  local args = {}
+  for _, v in ipairs(M.options.open_browser_args) do
+    table.insert(args, v)
+  end
   table.insert(args, url)
 
   shell.execute_with_error(M.options.open_browser_app, args)
