@@ -45,8 +45,18 @@ local function get_open_browser_app()
     app = "open"
   elseif sysname == "Linux" then
     app = "xdg-open"
+  elseif sysname == "Windows_NT" then
+    app = "powershell.exe"
   end
   return app
+end
+
+local function get_open_browser_args()
+  local args = {}
+  if sysname == "Windows_NT" then
+    args = { "start", "explorer.exe" }
+  end
+  return args
 end
 
 local function with_defaults(options)
@@ -55,7 +65,7 @@ local function with_defaults(options)
 
   return {
     open_browser_app = options.open_browser_app or get_open_browser_app(),
-    open_browser_args = options.open_browser_args or {},
+    open_browser_args = options.open_browser_args or get_open_browser_args(),
     handlers = {
       plugin = helper.ternary(options.handlers.plugin ~= nil, options.handlers.plugin, true),
       github = helper.ternary(options.handlers.github ~= nil, options.handlers.github, true),
