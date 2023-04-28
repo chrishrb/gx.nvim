@@ -11,8 +11,14 @@ function shell.execute(command, args)
   return return_val, result
 end
 
-function shell.execute_with_error(command, args)
-  local return_val, _ = shell.execute(command, args)
+function shell.execute_with_error(command, args, url)
+  local shell_args = {}
+  for _, v in ipairs(args) do
+    table.insert(shell_args, v)
+  end
+  table.insert(shell_args, url)
+
+  local return_val, _ = shell.execute(command, shell_args)
 
   if return_val ~= 0 then
     local ret = {}
