@@ -9,7 +9,7 @@
 * links with/without an explicit protocol (e.g. `google.com` will open `https://google.com`)
 * open plugins in the browser with a single command (e.g. in lazy, packer you can hover over a plugin name, simply press `gx` and you get to the github page of the plugin)
 * open github issues directly in the browser (e.g. `Fixes #22` opens `https://github.com/chrishrb/gx.nvim/issues/22`)
-* dependencies from `package.json` (e.g. line `"express": "^4.18.2",` in the `package.json` opens `https://www.npmjs.com/package/vue-router`)
+* dependencies from `package.json` (e.g. line `"express": "^4.18.2",` in the `package.json` opens `https://www.npmjs.com/package/express`)
 * support for macOS, Linux and Windows
 * more to come (jira issues, ..)
 
@@ -33,7 +33,7 @@ require("lazy").setup({
 
     -- you can specify also another config if you want
     config = function() require("gx").setup {
-      open_browser_app = "os_specific", -- specify your browser app; default for macOS is "open" and for Linux "xdg-open"
+      open_browser_app = "os_specific", -- specify your browser app; default for macOS is "open", Linux "xdg-open" and Windows "powershell.exe"
       open_browser_args = { "--background" }, -- specify any arguments, such as --background for macOS' "open".
       handlers = {
         plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
