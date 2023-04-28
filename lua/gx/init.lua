@@ -23,10 +23,7 @@ local function search_for_url()
     return
   end
 
-  local args = M.options.open_browser_args
-  table.insert(args, url)
-
-  shell.execute_with_error(M.options.open_browser_app, args)
+  shell.execute_with_error(M.options.open_browser_app, M.options.open_browser_args, url)
 end
 
 -- create keybindings
@@ -45,8 +42,19 @@ local function get_open_browser_app()
     app = "open"
   elseif sysname == "Linux" then
     app = "xdg-open"
+  elseif sysname == "Windows_NT" then
+    app = "powershell.exe"
   end
   return app
+end
+
+-- get the args for opening the webbrowser
+local function get_open_browser_args(args)
+  if sysname == "Windows_NT" then
+    local win_args = { "start", "explorer.exe" }
+    return helper.concat_tables(win_args, args)
+  end
+  return args
 end
 
 local function with_defaults(options)
@@ -55,7 +63,7 @@ local function with_defaults(options)
 
   return {
     open_browser_app = options.open_browser_app or get_open_browser_app(),
-    open_browser_args = options.open_browser_args or {},
+    open_browser_args = get_open_browser_args(options.open_browser_args or {}),
     handlers = {
       plugin = helper.ternary(options.handlers.plugin ~= nil, options.handlers.plugin, true),
       github = helper.ternary(options.handlers.github ~= nil, options.handlers.github, true),
@@ -70,11 +78,6 @@ end
 
 -- setup function
 function M.setup(options)
-  if not sysname == "Darwin" or not sysname == "Linux" then
-    notfier.error("Windows is not supported at the moment")
-    return
-  end
-
   M.options = with_defaults(options)
   bind_keys()
 end

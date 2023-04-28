@@ -10,12 +10,13 @@
 * open plugins in the browser with a single command (e.g. in lazy, packer you can hover over a plugin name, simply press `gx` and you get to the github page of the plugin)
 * open github issues directly in the browser (e.g. `Fixes #22` opens `https://github.com/chrishrb/gx.nvim/issues/22`)
 * dependencies from `package.json` (e.g. line `"express": "^4.18.2",` in the `package.json` opens `https://www.npmjs.com/package/vue-router`)
+* support for macOS, Linux and Windows
 * more to come (jira issues, ..)
 
 ## ⚡️ Requirements
 
 * Neovim >= 0.5.0
-* macOS (`open`) or Linux (`xdg-open`)
+* macOS (`open`), Linux (`xdg-open`) or Windows (`powershell.exe start explorer.exe`)
 
 ## 📦 Installation
 
