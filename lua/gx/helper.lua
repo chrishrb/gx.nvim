@@ -107,4 +107,28 @@ function M.check_filename(handler_filename)
   return false
 end
 
+local char_to_hex = function(c)
+  return string.format("%%%02X", string.byte(c))
+end
+
+function M.urlencode(url)
+  if url == nil then
+    return
+  end
+  url = url:gsub("\n", "\r\n")
+  url = string.gsub(url, "([^%w _%%%-%.~])", char_to_hex)
+  url = url:gsub(" ", "+")
+  return url
+end
+
+function M.get_search_url_from_engine(engine)
+  local search_url = {
+    google = "https://www.google.com/search?q=",
+    bing = "https://www.bing.com/search?q=",
+    duckduckgo = "https://duckduckgo.com/?q=",
+  }
+
+  return search_url[engine]
+end
+
 return M

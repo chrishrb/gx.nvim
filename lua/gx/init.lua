@@ -17,7 +17,7 @@ local function search_for_url()
   line = helper.cut_with_visual_mode(mode, line)
 
   -- search for url
-  local url = handler.get_url(mode, line, M.options.handlers)
+  local url = handler.get_url(mode, line, M.options.handlers, M.options.handler_options)
 
   if not url then
     return
@@ -60,6 +60,7 @@ end
 local function with_defaults(options)
   options = options or {}
   options.handlers = options.handlers or {}
+  options.handler_options = options.handler_options or {}
 
   return {
     open_browser_app = options.open_browser_app or get_open_browser_app(),
@@ -72,6 +73,10 @@ local function with_defaults(options)
         options.handlers.package_json,
         true
       ),
+      search = helper.ternary(options.handlers.search ~= nil, options.handlers.search, true),
+    },
+    handler_options = {
+      search_engine = "google",
     },
   }
 end
