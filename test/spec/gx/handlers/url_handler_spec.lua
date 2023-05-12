@@ -35,10 +35,7 @@ describe("url_parser_does_work", function()
     )
     assert.equals(
       "http://localhost:8080/backend/swagger-ui/#/project-controller",
-      handler.handle(
-        "v",
-        "http://localhost:8080/backend/swagger-ui/#/project-controller"
-      )
+      handler.handle("v", "http://localhost:8080/backend/swagger-ui/#/project-controller")
     )
   end)
 
