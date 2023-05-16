@@ -8,7 +8,7 @@ M.filetype = nil
 M.filename = nil
 
 -- navigate to neovim github plugin url
-function M.handle(mode, line)
+function M.handle(mode, line, _)
   local pattern = "%a*%s#(%d*)"
   local github_issue = helper.find(line, mode, pattern)
   if not github_issue then

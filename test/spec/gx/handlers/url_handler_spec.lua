@@ -33,6 +33,10 @@ describe("url_parser_does_work", function()
         "https://signin.aws.amazon.com/switchrole?roleName=my-role&account=111111111"
       )
     )
+    assert.equals(
+      "http://localhost:8080/backend/swagger-ui/#/project-controller",
+      handler.handle("v", "http://localhost:8080/backend/swagger-ui/#/project-controller")
+    )
   end)
 
   it("urls in python", function()

@@ -8,7 +8,7 @@ M.filetype = nil
 M.filename = nil
 
 -- navigate to github url for commit
-function M.handle(mode, line)
+function M.handle(mode, line, _)
   local pattern = "(%x%x%x%x%x%x%x+)"
   local commit_hash = helper.find(line, mode, pattern)
   if not commit_hash or #commit_hash > 40 then

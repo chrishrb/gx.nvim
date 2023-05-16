@@ -5,6 +5,7 @@ local url_handler = require("gx.handlers.url")
 local github_handler = require("gx.handlers.github")
 local commit_handler = require("gx.handlers.commit")
 local markdown_handler = require("gx.handlers.markdown")
+local search_handler = require("gx.handlers.search")
 
 local M = {}
 
@@ -20,7 +21,7 @@ local function add_handler(handlers, handler, active)
 end
 
 -- handler function
-function M.get_url(mode, line, activated_handlers)
+function M.get_url(mode, line, activated_handlers, handler_options)
   local url
   local handlers = {}
   local tkeys = {}
@@ -32,6 +33,7 @@ function M.get_url(mode, line, activated_handlers)
   add_handler(handlers, commit_handler, activated_handlers.github)
   add_handler(handlers, markdown_handler, true)
   add_handler(handlers, url_handler, true)
+  add_handler(handlers, search_handler, activated_handlers.search)
   -- ###
 
   for k in pairs(handlers) do
@@ -40,7 +42,7 @@ function M.get_url(mode, line, activated_handlers)
   table.sort(tkeys)
 
   for _, k in ipairs(tkeys) do
-    url = handlers[k].handle(mode, line)
+    url = handlers[k].handle(mode, line, handler_options)
 
     if url then
       break
