@@ -10,6 +10,7 @@
 * open plugins in the browser with a single command (e.g. in lazy, packer you can hover over a plugin name, simply press `gx` and you get to the github page of the plugin)
 * open github issues directly in the browser (e.g. `Fixes #22` opens `https://github.com/chrishrb/gx.nvim/issues/22`)
 * dependencies from `package.json` (e.g. line `"express": "^4.18.2",` in the `package.json` opens `https://www.npmjs.com/package/express`)
+* formulae and casks from `Brewfile` (e.g. line `brew "neovim"` in the `Brewfile` opens `https://formulae.brew.sh/formula/neovim`)
 * if there is no url found under the cursor, the word/selection is automatically searched on the web
 * support for macOS, Linux and Windows
 * more to come (jira issues, ..)
@@ -39,6 +40,7 @@ require("lazy").setup({
       handlers = {
         plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
         github = true, -- open github issues
+        brewfile = true, -- open Homebrew formulaes and casks
         package_json = true, -- open dependencies from package.json
         search = true, -- search the web/selection on the web if nothing else is found
       },
