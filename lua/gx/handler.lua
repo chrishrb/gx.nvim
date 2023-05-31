@@ -1,4 +1,5 @@
 local helper = require("gx.helper")
+local brewfile_handler = require("gx.handlers.brewfile")
 local package_json_handler = require("gx.handlers.package_json")
 local plugin_handler = require("gx.handlers.plugin")
 local url_handler = require("gx.handlers.url")
@@ -27,6 +28,7 @@ function M.get_url(mode, line, activated_handlers, handler_options)
   local tkeys = {}
 
   -- ### add here new handlers
+  add_handler(handlers, brewfile_handler, activated_handlers.brewfile)
   add_handler(handlers, package_json_handler, activated_handlers.package_json)
   add_handler(handlers, plugin_handler, activated_handlers.plugin)
   add_handler(handlers, github_handler, activated_handlers.github)

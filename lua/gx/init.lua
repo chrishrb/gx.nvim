@@ -66,6 +66,7 @@ local function with_defaults(options)
     open_browser_app = options.open_browser_app or get_open_browser_app(),
     open_browser_args = get_open_browser_args(options.open_browser_args or {}),
     handlers = {
+      brewfile = helper.ternary(options.handlers.brewfile ~= nil, options.handlers.brewfile, true),
       plugin = helper.ternary(options.handlers.plugin ~= nil, options.handlers.plugin, true),
       github = helper.ternary(options.handlers.github ~= nil, options.handlers.github, true),
       package_json = helper.ternary(
