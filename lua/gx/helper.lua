@@ -126,6 +126,7 @@ function M.get_search_url_from_engine(engine)
     google = "https://www.google.com/search?q=",
     bing = "https://www.bing.com/search?q=",
     duckduckgo = "https://duckduckgo.com/?q=",
+    ecosia = "https://www.ecosia.org/search?q=",
   }
 
   return search_url[engine]
