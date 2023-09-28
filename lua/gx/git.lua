@@ -1,11 +1,7 @@
-local Job = require("plenary.job")
-local notfier = require("gx.notfier")
-local shell = require("gx.shell")
-
 M = {}
 
 local function parse_git_output(result)
-  if not result or table.getn(result) < 1 then
+  if not result or #result < 1 then
     return
   end
 
@@ -21,16 +17,19 @@ local function parse_git_output(result)
 end
 
 function M.get_remote_url()
-  local return_val, result = shell.execute("git", { "remote", "-v" })
+  local notifier = require("gx.notifier")
+
+  local return_val, result = require("gx.shell").execute("git", { "remote", "-v" })
 
   if return_val ~= 0 then
-    notfier.warn("No git information available!")
+    notifier.warn("No git information available!")
     return
   end
 
   local url = parse_git_output(result)
   if not url then
-    notfier.warn("No remote git repository found!")
+    notifier.warn("No remote git repository found!")
+    return
   end
 
   return url

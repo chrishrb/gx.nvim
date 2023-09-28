@@ -1,7 +1,4 @@
-local notfier = require("gx.notfier")
 local helper = require("gx.helper")
-local handler = require("gx.handler")
-local shell = require("gx.shell")
 
 local keymap = vim.keymap.set
 local sysname = vim.loop.os_uname().sysname
@@ -17,13 +14,18 @@ local function search_for_url()
   line = helper.cut_with_visual_mode(mode, line)
 
   -- search for url
-  local url = handler.get_url(mode, line, M.options.handlers, M.options.handler_options)
+  local url =
+    require("gx.handler").get_url(mode, line, M.options.handlers, M.options.handler_options)
 
   if not url then
     return
   end
 
-  shell.execute_with_error(M.options.open_browser_app, M.options.open_browser_args, url)
+  require("gx.shell").execute_with_error(
+    M.options.open_browser_app,
+    M.options.open_browser_args,
+    url
+  )
 end
 
 -- create keybindings

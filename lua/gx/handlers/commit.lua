@@ -1,11 +1,10 @@
 local helper = require("gx.helper")
-local git = require("gx.git")
 
-local M = {}
-
--- every filetype and filename
-M.filetype = nil
-M.filename = nil
+local M = {
+  -- every filetype and filename
+  filetype = nil,
+  filename = nil,
+}
 
 -- navigate to github url for commit
 function M.handle(mode, line, _)
@@ -14,7 +13,7 @@ function M.handle(mode, line, _)
   if not commit_hash or #commit_hash > 40 then
     return
   end
-  local git_url = git.get_remote_url()
+  local git_url = require("gx.git").get_remote_url()
   if not git_url then
     return
   end
