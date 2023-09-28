@@ -1,8 +1,9 @@
-local Job = require("plenary.job")
-local notfier = require("gx.notfier")
 local shell = {}
 
 function shell.execute(command, args)
+  -- TODO: This could use vim.system() in 0.10+
+  local Job = require("plenary.job")
+
   local result, return_val = Job:new({
     command = command,
     args = args,
@@ -25,8 +26,10 @@ function shell.execute_with_error(command, args, url)
     for _, a in pairs(args) do
       table.insert(ret, a)
     end
-    notfier.error('Command "' .. command .. " " .. table.concat(ret, " ") .. '" not successful.')
-    return
+
+    require("gx.notifier").error(
+      'Command "' .. command .. " " .. table.concat(ret, " ") .. '" not successful.'
+    )
   end
 end
 

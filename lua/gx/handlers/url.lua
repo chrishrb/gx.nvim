@@ -1,10 +1,10 @@
 local helper = require("gx.helper")
 
-local M = {}
-
--- every filetype
-M.filetype = nil
-M.filename = nil
+local M = {
+  -- every filetype
+  filetype = nil,
+  filename = nil,
+}
 
 -- get url from line (with http/s)
 function M.handle(mode, line, _)

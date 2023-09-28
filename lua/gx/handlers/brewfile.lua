@@ -1,10 +1,10 @@
 local helper = require("gx.helper")
 
-local M = {}
-
--- only Brewfile
-M.filetype = nil
-M.filename = "Brewfile"
+local M = {
+  -- only Brewfile
+  filetype = nil,
+  filename = "Brewfile",
+}
 
 -- navigate to Homebrew Formulae url
 function M.handle(mode, line, _)
