@@ -46,6 +46,7 @@ require("lazy").setup({
       },
       handler_options = {
         search_engine = "google", -- you can select between google, bing, duckduckgo, and ecosia
+        search_engine = "https://search.brave.com/search?q=", -- or you can pass in a custom search engine
       },
     } end,
   },

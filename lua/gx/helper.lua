@@ -128,7 +128,9 @@ function M.get_search_url_from_engine(engine)
     duckduckgo = "https://duckduckgo.com/?q=",
     ecosia = "https://www.ecosia.org/search?q=",
   }
-
+  if search_url[engine] == nil then
+    return engine
+  end
   return search_url[engine]
 end
 
