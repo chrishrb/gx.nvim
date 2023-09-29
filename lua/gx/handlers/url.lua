@@ -8,12 +8,12 @@ local M = {
 
 -- get url from line (with http/s)
 function M.handle(mode, line, _)
-  local pattern = "(https?://[a-zA-Z0-9_/%-%.~@\\+#=?&:]+)"
+  local pattern = "(https?://[a-zA-Z%d_/%%%-%.~@\\+#=?&:]+)"
   local url = helper.find(line, mode, pattern)
 
   -- match url without http(s)
   if not url then
-    pattern = "([a-zA-Z0-9_/%-%.~@\\+#]+%.[a-zA-Z0-9_/%-%.~@\\+#%=?&:]+)"
+    pattern = "([a-zA-Z%d_/%-%.~@\\+#]+%.[a-zA-Z%d_/%%%-%.~@\\+#=?&:]+)"
     url = helper.find(line, mode, pattern)
     if url then
       return "https://" .. url
