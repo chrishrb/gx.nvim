@@ -21,7 +21,11 @@ local function search_for_url()
     return
   end
 
-  require("gx.shell").execute_with_error(
+  return M.browse(url)
+end
+
+function M.browse(url)
+  return require("gx.shell").execute_with_error(
     M.options.open_browser_app,
     M.options.open_browser_args,
     url
@@ -88,6 +92,9 @@ end
 function M.setup(options)
   M.options = with_defaults(options)
   bind_keys()
+  vim.api.nvim_create_user_command("Browse", function(opts)
+    M.browse(opts.fargs[1])
+  end, { nargs = 1 })
 end
 
 M.options = nil
