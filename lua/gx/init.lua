@@ -37,8 +37,7 @@ local function bind_keys()
   vim.g.netrw_nogx = 1 -- disable netrw gx
 
   local opts = { noremap = true, silent = true }
-  keymap("n", "gx", search_for_url, opts)
-  keymap("v", "gx", search_for_url, opts)
+  keymap({ "n", "x" }, "gx", search_for_url, opts)
 end
 
 -- get the app for opening the webbrowser
