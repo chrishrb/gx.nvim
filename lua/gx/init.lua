@@ -1,18 +1,10 @@
 local helper = require("gx.helper")
 
-local keymap = vim.keymap.set
 local sysname = vim.loop.os_uname().sysname
 
 local M = {}
 
--- search for url with handler
-local function search_for_url()
-  local line = vim.api.nvim_get_current_line()
-  local mode = vim.api.nvim_get_mode().mode
-
-  -- cut if in visual mode
-  line = helper.cut_with_visual_mode(mode, line)
-
+function M.browse(mode, line)
   -- search for url
   local url =
     require("gx.handler").get_url(mode, line, M.options.handlers, M.options.handler_options)
@@ -21,10 +13,6 @@ local function search_for_url()
     return
   end
 
-  return M.browse(url)
-end
-
-function M.browse(url)
   return require("gx.shell").execute_with_error(
     M.options.open_browser_app,
     M.options.open_browser_args,
@@ -32,12 +20,15 @@ function M.browse(url)
   )
 end
 
--- create keybindings
-local function bind_keys()
-  vim.g.netrw_nogx = 1 -- disable netrw gx
+-- search for url with handler
+function M.open()
+  local line = vim.api.nvim_get_current_line()
+  local mode = vim.api.nvim_get_mode().mode
 
-  local opts = { noremap = true, silent = true }
-  keymap({ "n", "x" }, "gx", search_for_url, opts)
+  -- cut if in visual mode
+  line = helper.cut_with_visual_mode(mode, line)
+
+  return M.browse(mode, line)
 end
 
 -- get the app for opening the webbrowser
@@ -90,9 +81,8 @@ end
 -- setup function
 function M.setup(options)
   M.options = with_defaults(options)
-  bind_keys()
   vim.api.nvim_create_user_command("Browse", function(opts)
-    M.browse(opts.fargs[1])
+    M.browse("n", opts.fargs[1])
   end, { nargs = 1 })
 end
 

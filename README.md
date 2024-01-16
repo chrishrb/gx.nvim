@@ -29,7 +29,14 @@
 require("lazy").setup({
   {
     "chrishrb/gx.nvim",
-    event = { "BufEnter" },
+    event = "VeryLazy",
+    keys = {
+      { "gx", mode = {"n", "x" }, function () require("gx").open() end, desc = "Open" }
+    },
+    cmd = { "Browse" },
+    init = function ()
+      vim.g.netrw_nogx = 1 -- disable netrw gx
+    end,
     dependencies = { "nvim-lua/plenary.nvim" },
     config = true, -- default settings
 
