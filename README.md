@@ -29,7 +29,11 @@
 require("lazy").setup({
   {
     "chrishrb/gx.nvim",
-    event = { "BufEnter" },
+    keys = { {"gx", mode = { "n", "x" }} },
+    cmd = { "Browse" },
+    init = function ()
+      vim.g.netrw_nogx = 1 -- disable netrw gx
+    end,
     dependencies = { "nvim-lua/plenary.nvim" },
     config = true, -- default settings
 
@@ -53,9 +57,10 @@ require("lazy").setup({
 })
 ```
 
-## ⌨️ Mappings
+## ⌨️ Mappings and Commands
 
 * `gx` is overridden by default
+* `Browse <URL or WORDS>`, e.g. `Browse http://google.de`, `Browse example`
 
 ## 🚀 Usage
 
