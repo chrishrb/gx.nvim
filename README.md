@@ -9,7 +9,7 @@
 * open links without `netrw`
 * normal and visual mode support
 * links with/without an explicit protocol (e.g. `google.com` will open `https://google.com`)
-* open plugins in the browser with a single command (e.g. in lazy, packer you can hover over a plugin name, simply press `gx` and you get to the github page of the plugin)
+* open plugins in the browser with a single command (e.g. in lazy, packer you can hover over a plugin name, simply press `gx` or execute command `Browse` and you get to the github page of the plugin)
 * open github issues directly in the browser (e.g. `Fixes #22` opens `https://github.com/chrishrb/gx.nvim/issues/22`)
 * dependencies from `package.json` (e.g. line `"express": "^4.18.2",` in the `package.json` opens `https://www.npmjs.com/package/express`)
 * formulae and casks from `Brewfile` (e.g. line `brew "neovim"` in the `Brewfile` opens `https://formulae.brew.sh/formula/neovim`)
@@ -59,13 +59,10 @@ require("lazy").setup({
 })
 ```
 
-## ⌨️ Mappings
-
-* `gx` is overridden by default
-
-## 📡 API
+## 📡 Commands
 
 * `Browse <URL or WORDS>`, e.g. `Browse http://google.de`, `Browse example`
+* OR hover/select words, links and more and execute command `Browse`
 
 ## 🚀 Usage
 
