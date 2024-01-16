@@ -4,8 +4,16 @@ local sysname = vim.loop.os_uname().sysname
 
 local M = {}
 
-function M.browse(mode, line)
-  -- search for url
+-- search for url with handler
+function M.open(mode, line)
+  if not line then
+    line = vim.api.nvim_get_current_line()
+    mode = vim.api.nvim_get_mode().mode
+  end
+
+  -- cut if in visual mode
+  line = helper.cut_with_visual_mode(mode, line)
+
   local url =
     require("gx.handler").get_url(mode, line, M.options.handlers, M.options.handler_options)
 
@@ -18,17 +26,6 @@ function M.browse(mode, line)
     M.options.open_browser_args,
     url
   )
-end
-
--- search for url with handler
-local function open()
-  local line = vim.api.nvim_get_current_line()
-  local mode = vim.api.nvim_get_mode().mode
-
-  -- cut if in visual mode
-  line = helper.cut_with_visual_mode(mode, line)
-
-  return M.browse(mode, line)
 end
 
 -- get the app for opening the webbrowser
@@ -78,19 +75,28 @@ local function with_defaults(options)
   }
 end
 
-local function bind_keys()
-  vim.g.netrw_nogx = 1 -- disable netrw gx
-  local opts = { noremap = true, silent = true }
-  vim.keymap.set({ "n", "x" }, "gx", open, opts)
+local function bind_command()
+  vim.api.nvim_create_user_command("Browse", function(opts)
+    local fargs = opts.fargs[1]
+    if fargs then
+      M.open("c", fargs)
+      return
+    end
+
+    if opts.range == 2 then
+      local range = vim.fn.getline(opts.line1)
+      M.open("v", range)
+      return
+    end
+
+    M.open()
+  end, { nargs = "?", range = 1 })
 end
 
 -- setup function
 function M.setup(options)
   M.options = with_defaults(options)
-  bind_keys()
-  vim.api.nvim_create_user_command("Browse", function(opts)
-    M.browse("v", opts.fargs[1])
-  end, { nargs = 1 })
+  bind_command()
 end
 
 M.options = nil

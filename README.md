@@ -2,6 +2,8 @@
 
 ![ci](https://github.com/chrishrb/gx.nvim/actions/workflows/ci.yml/badge.svg)
 
+> ATTENTION: There was a breaking change in version v0.5.0. The keybinding `gx` must now be configured manually. See [Installation](#-installation)
+
 ## ✨ Features
 
 * open links without `netrw`
@@ -29,7 +31,7 @@
 require("lazy").setup({
   {
     "chrishrb/gx.nvim",
-    keys = { {"gx", mode = { "n", "x" }} },
+    keys = { { "gx", "<cmd>Browse<cr>", mode = { "n", "x" }} },
     cmd = { "Browse" },
     init = function ()
       vim.g.netrw_nogx = 1 -- disable netrw gx
@@ -57,9 +59,12 @@ require("lazy").setup({
 })
 ```
 
-## ⌨️ Mappings and Commands
+## ⌨️ Mappings
 
 * `gx` is overridden by default
+
+## 📡 API
+
 * `Browse <URL or WORDS>`, e.g. `Browse http://google.de`, `Browse example`
 
 ## 🚀 Usage

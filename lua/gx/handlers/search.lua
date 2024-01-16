@@ -10,7 +10,7 @@ local M = {
 function M.handle(mode, line, handler_options)
   local search_pattern
 
-  if mode == "v" then
+  if mode == "v" or mode == "c" then
     search_pattern = line
   else
     search_pattern = vim.fn.expand("<cword>")
