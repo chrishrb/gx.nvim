@@ -57,9 +57,10 @@ require("lazy").setup({
 })
 ```
 
-## ⌨️ Mappings
+## ⌨️ Mappings and Commands
 
 * `gx` is overridden by default
+* `Browse <URL or WORDS>`, e.g. `Browse http://google.de`, `Browse example`
 
 ## 🚀 Usage
 

@@ -89,7 +89,7 @@ function M.setup(options)
   M.options = with_defaults(options)
   bind_keys()
   vim.api.nvim_create_user_command("Browse", function(opts)
-    M.browse("n", opts.fargs[1])
+    M.browse("v", opts.fargs[1])
   end, { nargs = 1 })
 end
 
