@@ -32,7 +32,7 @@ end
 
 -- check that cursor on uri in normal mode
 function M.check_if_cursor_on_url(mode, i, j)
-  if mode ~= "n" or mode ~= "c" then
+  if mode ~= "n" then
     return true
   end
 
