@@ -29,10 +29,7 @@
 require("lazy").setup({
   {
     "chrishrb/gx.nvim",
-    event = "VeryLazy",
-    keys = {
-      { "gx", mode = {"n", "x" }, function () require("gx").open() end, desc = "Open" }
-    },
+    keys = { {"gx", mode = { "n", "x" }} },
     cmd = { "Browse" },
     init = function ()
       vim.g.netrw_nogx = 1 -- disable netrw gx

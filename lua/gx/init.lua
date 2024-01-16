@@ -21,7 +21,7 @@ function M.browse(mode, line)
 end
 
 -- search for url with handler
-function M.open()
+local function open()
   local line = vim.api.nvim_get_current_line()
   local mode = vim.api.nvim_get_mode().mode
 
@@ -78,9 +78,16 @@ local function with_defaults(options)
   }
 end
 
+local function bind_keys()
+  vim.g.netrw_nogx = 1 -- disable netrw gx
+  local opts = { noremap = true, silent = true }
+  vim.keymap.set({ "n", "x" }, "gx", open, opts)
+end
+
 -- setup function
 function M.setup(options)
   M.options = with_defaults(options)
+  bind_keys()
   vim.api.nvim_create_user_command("Browse", function(opts)
     M.browse("n", opts.fargs[1])
   end, { nargs = 1 })
