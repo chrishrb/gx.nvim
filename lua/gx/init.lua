@@ -68,9 +68,15 @@ local function with_defaults(options)
         true
       ),
       search = helper.ternary(options.handlers.search ~= nil, options.handlers.search, true),
+      cargo_toml = helper.ternary(
+        options.handlers.cargo_toml ~= nil,
+        options.handlers.cargo_toml,
+        true
+      ),
     },
     handler_options = {
       search_engine = options.handler_options.search_engine or "google",
+      crate_registry = options.handler_options.crate_registry or "crates.io",
     },
   }
 end

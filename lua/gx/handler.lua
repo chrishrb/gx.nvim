@@ -7,6 +7,7 @@ local github_handler = require("gx.handlers.github")
 local commit_handler = require("gx.handlers.commit")
 local markdown_handler = require("gx.handlers.markdown")
 local search_handler = require("gx.handlers.search")
+local cargo_toml_handler = require("gx.handlers.cargo_toml")
 
 local M = {}
 
@@ -30,6 +31,7 @@ function M.get_url(mode, line, activated_handlers, handler_options)
   -- ### add here new handlers
   add_handler(handlers, brewfile_handler, activated_handlers.brewfile)
   add_handler(handlers, package_json_handler, activated_handlers.package_json)
+  add_handler(handlers, cargo_toml_handler, activated_handlers.cargo_toml)
   add_handler(handlers, plugin_handler, activated_handlers.plugin)
   add_handler(handlers, github_handler, activated_handlers.github)
   add_handler(handlers, commit_handler, activated_handlers.github)
