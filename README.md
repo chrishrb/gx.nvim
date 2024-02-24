@@ -54,6 +54,14 @@ require("lazy").setup({
       handler_options = {
         search_engine = "google", -- you can select between google, bing, duckduckgo, and ecosia
         search_engine = "https://search.brave.com/search?q=", -- or you can pass in a custom search engine
+
+        git_remotes = { "upstream", "origin" }, -- list of git remotes to search for git issue linking, in priority
+        git_remotes = function(fname) -- you can also pass in a function
+            if fname:match("myproject") then
+                return { "mygit" }
+            end
+            return { "upstream", "origin" }
+        end,
       },
     } end,
   },
