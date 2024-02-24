@@ -62,6 +62,7 @@ local function with_defaults(options)
       brewfile = helper.ternary(options.handlers.brewfile ~= nil, options.handlers.brewfile, true),
       plugin = helper.ternary(options.handlers.plugin ~= nil, options.handlers.plugin, true),
       github = helper.ternary(options.handlers.github ~= nil, options.handlers.github, true),
+      go = helper.ternary(options.handlers.go ~= nil, options.handlers.go, true),
       package_json = helper.ternary(
         options.handlers.package_json ~= nil,
         options.handlers.package_json,

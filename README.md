@@ -6,21 +6,22 @@
 
 ## ✨ Features
 
-* open links without `netrw`
-* normal and visual mode support
-* links with/without an explicit protocol (e.g. `google.com` will open `https://google.com`)
-* open plugins in the browser with a single command (e.g. in lazy, packer you can hover over a plugin name, simply press `gx` or execute command `Browse` and you get to the github page of the plugin)
-* open github issues directly in the browser (e.g. `Fixes #22` opens `https://github.com/chrishrb/gx.nvim/issues/22`)
-* dependencies from `package.json` (e.g. line `"express": "^4.18.2",` in the `package.json` opens `https://www.npmjs.com/package/express`)
-* formulae and casks from `Brewfile` (e.g. line `brew "neovim"` in the `Brewfile` opens `https://formulae.brew.sh/formula/neovim`)
-* if there is no url found under the cursor, the word/selection is automatically searched on the web
-* support for macOS, Linux and Windows
-* more to come (jira issues, ..)
+-   open links without `netrw`
+-   normal and visual mode support
+-   links with/without an explicit protocol (e.g. `google.com` will open `https://google.com`)
+-   open plugins in the browser with a single command (e.g. in lazy, packer you can hover over a plugin name, simply press `gx` or execute command `Browse` and you get to the github page of the plugin)
+-   open github issues directly in the browser (e.g. `Fixes #22` opens `https://github.com/chrishrb/gx.nvim/issues/22`)
+-   dependencies from `package.json` (e.g. line `"express": "^4.18.2",` in the `package.json` opens `https://www.npmjs.com/package/express`)
+-   formulae and casks from `Brewfile` (e.g. line `brew "neovim"` in the `Brewfile` opens `https://formulae.brew.sh/formula/neovim`)
+-   go packages from an import statement (e.g. line `import "github.com/joho/godotenv"` opens `https://pkg.go.dev/github.com/joho/godotenv`)
+-   if there is no url found under the cursor, the word/selection is automatically searched on the web
+-   support for macOS, Linux and Windows
+-   more to come (jira issues, ...)
 
 ## ⚡️ Requirements
 
-* Neovim >= 0.5.0
-* macOS (`open`), Linux (`xdg-open`) or Windows (`powershell.exe start explorer.exe`)
+-   Neovim >= 0.5.0
+-   macOS (`open`), Linux (`xdg-open`) or Windows (`powershell.exe start explorer.exe`)
 
 ## 📦 Installation
 
@@ -50,6 +51,7 @@ require("lazy").setup({
         brewfile = true, -- open Homebrew formulaes and casks
         package_json = true, -- open dependencies from package.json
         search = true, -- search the web/selection on the web if nothing else is found
+        go = true, -- open pkg.go.dev from an import statement (uses treesitter)
       },
       handler_options = {
         search_engine = "google", -- you can select between google, bing, duckduckgo, and ecosia
@@ -62,8 +64,8 @@ require("lazy").setup({
 
 ## 📡 Commands
 
-* `Browse <URL or WORDS>`, e.g. `Browse http://google.de`, `Browse example`
-* OR hover/select words, links and more and execute command `Browse`
+-   `Browse <URL or WORDS>`, e.g. `Browse http://google.de`, `Browse example`
+-   OR hover/select words, links and more and execute command `Browse`
 
 ## 🚀 Usage
 
@@ -71,4 +73,4 @@ When your cursor is over a link or you mark a link or part of a link with the vi
 
 ## 📄 Acknowledgements
 
-* lua functions library [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
+-   lua functions library [plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
