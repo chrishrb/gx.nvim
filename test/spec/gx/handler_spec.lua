@@ -8,6 +8,9 @@ describe("test handler", function()
     github = false,
     package_json = false,
   }
+  local handler_options = {
+    git_remotes = { "upstream", "origin" },
+  }
 
   before_each(function()
     before_mock_filetype = vim.bo.filetype
@@ -84,14 +87,17 @@ describe("test handler", function()
     -- mock filetype
     vim.bo.filetype = "lua"
 
-    assert.equals("https://github.com", handler.get_url("v", "github.com", activated_handlers))
     assert.equals(
       "https://github.com",
-      handler.get_url("v", "https://github.com", activated_handlers)
+      handler.get_url("v", "github.com", activated_handlers, handler_options)
+    )
+    assert.equals(
+      "https://github.com",
+      handler.get_url("v", "https://github.com", activated_handlers, handler_options)
     )
     assert.equals(
       "https://github.com/chrishrb/gx.nvim/issues/22",
-      handler.get_url("v", "Fixes #22", activated_handlers)
+      handler.get_url("v", "Fixes #22", activated_handlers, handler_options)
     )
   end)
 
