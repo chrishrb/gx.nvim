@@ -16,18 +16,21 @@ local function parse_git_output(result)
   end
 end
 
-function M.get_remote_url(owner)
+function M.get_remote_url(remotes, owner)
   local notifier = require("gx.notifier")
 
-  local return_val, result =
-    require("gx.shell").execute("git", { "remote", "get-url", "--push", "origin" })
-
-  if return_val ~= 0 then
-    notifier.warn("No git information available!")
-    return
+  local url = nil
+  for _, remote in ipairs(remotes) do
+    local exit_code, result =
+      require("gx.shell").execute("git", { "remote", "get-url", "--push", remote })
+    if exit_code == 0 then
+      url = parse_git_output(result)
+      if url then
+        break
+      end
+    end
   end
 
-  local url = parse_git_output(result)
   if not url then
     notifier.warn("No remote git repository found!")
     return

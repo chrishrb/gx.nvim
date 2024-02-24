@@ -8,7 +8,7 @@ local M = {
 }
 
 -- navigate to neovim github plugin url
-function M.handle(mode, line, _)
+function M.handle(mode, line, handler_options)
   local match = helper.find(line, mode, "([%w-_]+#%d+)")
   if not match then
     match = helper.find(line, mode, "(#%d+)")
@@ -18,7 +18,12 @@ function M.handle(mode, line, _)
   end
   local owner, issue = match:match("(.*)#(.+)")
 
-  local git_url = require("gx.git").get_remote_url(owner)
+  local remotes = handler_options.git_remotes
+  if type(remotes) == "function" then
+    remotes = remotes(vim.fn.expand("%:p"))
+  end
+
+  local git_url = require("gx.git").get_remote_url(remotes, owner)
   if not git_url then
     return
   end

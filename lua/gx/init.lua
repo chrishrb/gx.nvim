@@ -98,6 +98,7 @@ local function with_defaults(options)
     handler_options = {
       search_engine = options.handler_options.search_engine or "google",
       select_for_search = options.handler_options.select_for_search or false,
+      git_remotes = options.handler_options.git_remotes or { "upstream", "origin" },
     },
   }
 end
