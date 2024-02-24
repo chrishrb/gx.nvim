@@ -9,16 +9,20 @@ local M = {
 
 -- navigate to neovim github plugin url
 function M.handle(mode, line, _)
-  local pattern = "#(%d+)"
-  local github_issue = helper.find(line, mode, pattern)
-  if not github_issue then
+  local match = helper.find(line, mode, "([%w-_]+#%d+)")
+  if not match then
+    match = helper.find(line, mode, "(#%d+)")
+  end
+  if not match then
     return
   end
-  local git_url = require("gx.git").get_remote_url()
+  local owner, issue = match:match("(.*)#(.+)")
+
+  local git_url = require("gx.git").get_remote_url(owner)
   if not git_url then
     return
   end
-  return git_url .. "/issues/" .. github_issue
+  return git_url .. "/issues/" .. issue
 end
 
 return M
