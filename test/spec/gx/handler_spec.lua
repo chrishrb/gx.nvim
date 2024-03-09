@@ -3,14 +3,16 @@ local handler = require("gx.handler")
 local stub = require("luassert.stub")
 
 describe("test handler", function()
-  local activated_handlers = {
-    plugin = false,
-    github = false,
-    package_json = false,
-  }
+  local activated_handlers
 
   before_each(function()
     before_mock_filetype = vim.bo.filetype
+    activated_handlers = {
+      plugin = false,
+      github = false,
+      package_json = false,
+      search = false,
+    }
   end)
 
   after_each(function()
@@ -26,8 +28,8 @@ describe("test handler", function()
       "https://github.com",
       handler.get_url("v", "https://github.com", activated_handlers)
     )
-    assert.equals(nil, handler.get_url("v", '"example_user/example_plugin"', activated_handlers))
-    assert.equals(nil, handler.get_url("v", "Fixes #22", activated_handlers))
+    assert.is.Nil(handler.get_url("v", '"example_user/example_plugin"', activated_handlers))
+    assert.is.Nil(handler.get_url("v", "Fixes #22", activated_handlers))
   end)
 
   it("plugin handler on", function()
@@ -48,6 +50,7 @@ describe("test handler", function()
   end)
 
   it("plugin handler on and filetype vim", function()
+    activated_handlers.plugin = true
     activated_handlers.github = true
 
     -- mock filetype
@@ -75,7 +78,7 @@ describe("test handler", function()
       "https://github.com",
       handler.get_url("v", "https://github.com", activated_handlers)
     )
-    assert.equals(nil, handler.get_url("v", '"example_user/example_plugin"', activated_handlers))
+    assert.is.Nil(handler.get_url("v", '"example_user/example_plugin"', activated_handlers))
   end)
 
   it("github handler on", function()
@@ -110,5 +113,27 @@ describe("test handler", function()
     )
 
     helper.get_filename:revert()
+  end)
+
+  it("user defined handler has precedence", function()
+    activated_handlers.commit = true
+    activated_handlers.custom = {
+      handle = function()
+        return "https://from.user.handler"
+      end,
+    }
+
+    assert.equals("https://from.user.handler", handler.get_url("v", "1a2b3c4", activated_handlers))
+  end)
+
+  it("user defined handler instead of builtin handler", function()
+    activated_handlers.commit = true
+    activated_handlers.commit = {
+      handle = function()
+        return "https://from.user.handler"
+      end,
+    }
+
+    assert.equals("https://from.user.handler", handler.get_url("v", "1a2b3c4", activated_handlers))
   end)
 end)

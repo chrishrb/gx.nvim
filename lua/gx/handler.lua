@@ -12,46 +12,57 @@ local M = {}
 
 local function add_handler(handlers, handler, active)
   if
-    not active
+    active == false
     or not helper.check_filetype(handler.filetype)
     or not helper.check_filename(handler.filename)
   then
     return
   end
-  table.insert(handlers, handler)
+  handlers[#handlers + 1] = handler
 end
 
--- handler function
-function M.get_url(mode, line, activated_handlers, handler_options)
-  local url
-  local handlers = {}
-  local tkeys = {}
+---@param handlers { [string]: (boolean | GxHandler)[] }
+---@return GxHandler[]
+local function resolve_handlers(handlers)
+  local resolved = {}
+  local exists = {}
 
-  -- ### add here new handlers
-  add_handler(handlers, brewfile_handler, activated_handlers.brewfile)
-  add_handler(handlers, package_json_handler, activated_handlers.package_json)
-  add_handler(handlers, plugin_handler, activated_handlers.plugin)
-  add_handler(handlers, github_handler, activated_handlers.github)
-  add_handler(handlers, commit_handler, activated_handlers.github)
-  add_handler(handlers, markdown_handler, true)
-  add_handler(handlers, url_handler, true)
-  add_handler(handlers, search_handler, activated_handlers.search)
-  -- ###
-
-  for k in pairs(handlers) do
-    table.insert(tkeys, k)
-  end
-  table.sort(tkeys)
-
-  for _, k in ipairs(tkeys) do
-    url = handlers[k].handle(mode, line, handler_options)
-
-    if url then
-      break
+  for name, config in pairs(handlers) do
+    if type(config) == "table" then
+      add_handler(resolved, config, true)
+      exists[name] = true
     end
   end
 
-  return url
+  -- ### add here new handlers
+  add_handler(resolved, brewfile_handler, handlers.brewfile and exists.brewfile == nil)
+  add_handler(resolved, package_json_handler, handlers.package_json and exists.package_json == nil)
+  add_handler(resolved, plugin_handler, handlers.plugin and exists.plugin == nil)
+  add_handler(resolved, github_handler, handlers.github and exists.github == nil)
+  add_handler(resolved, commit_handler, handlers.commit and exists.commit == nil)
+  add_handler(resolved, markdown_handler, handlers.markdown and exists.markdown == nil)
+  add_handler(resolved, url_handler, handlers.url and exists.url == nil)
+  add_handler(resolved, search_handler, handlers.search and exists.search == nil)
+  -- ###
+
+  return resolved
+end
+
+-- handler function
+---@param mode string
+---@param line string
+---@param configured_handlers { [string]: (boolean | GxHandler)[] }
+---@return string | nil
+function M.get_url(mode, line, configured_handlers, handler_options)
+  local handlers = resolve_handlers(configured_handlers)
+
+  for _, handler in ipairs(handlers) do
+    local url = handler.handle(mode, line, handler_options)
+
+    if url then
+      return url
+    end
+  end
 end
 
 return M

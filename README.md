@@ -14,6 +14,7 @@
 * dependencies from `package.json` (e.g. line `"express": "^4.18.2",` in the `package.json` opens `https://www.npmjs.com/package/express`)
 * formulae and casks from `Brewfile` (e.g. line `brew "neovim"` in the `Brewfile` opens `https://formulae.brew.sh/formula/neovim`)
 * if there is no url found under the cursor, the word/selection is automatically searched on the web
+* supports user defined handlers to extend the functionality
 * support for macOS, Linux and Windows
 * more to come (jira issues, ..)
 
@@ -50,6 +51,15 @@ require("lazy").setup({
         brewfile = true, -- open Homebrew formulaes and casks
         package_json = true, -- open dependencies from package.json
         search = true, -- search the web/selection on the web if nothing else is found
+        jira = { -- custom handler to open Jira tickets (these have higher precedence than builtin handlers)
+          handle = function(mode, line, _)
+            local ticket = require("gx.helper").find(line, mode, "(%u+-%d+)")
+            if ticket and #ticket < 20 then
+              return "http://jira.company.com/browse/" .. ticket
+            end
+          end,
+        },
+      },
       },
       handler_options = {
         search_engine = "google", -- you can select between google, bing, duckduckgo, and ecosia
