@@ -8,7 +8,7 @@ local M = {
 
 -- navigate to neovim github plugin url
 function M.handle(mode, line, _)
-  local pattern = "%[.*%]%((https?://[a-zA-Z0-9_/%-%.~@\\+#=?&]+)%)"
+  local pattern = "%[[%a%d%s.,?!:;@_{}~]*%]%((https?://[a-zA-Z0-9_/%-%.~@\\+#=?&]+)%)"
 
   return helper.find(line, mode, pattern)
 end
