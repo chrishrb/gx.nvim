@@ -4,6 +4,20 @@ local sysname = vim.loop.os_uname().sysname
 
 local M = {}
 
+---@class GxHandlerOptions
+---@field search_engine string
+
+---@class GxHandler
+---@field filetypes string[] | nil
+---@field filename string | nil
+---@field handle fun(mode: string, line: string, handler_options: GxHandlerOptions | nil)
+
+---@class GxOptions
+---@field open_browser_app string
+---@field open_browser_args string[]
+---@field handlers (boolean | GxHandler)[]
+---@field handler_options GxHandlerOptions | nil
+
 -- search for url with handler
 function M.open(mode, line)
   if not line then
@@ -52,23 +66,12 @@ end
 
 local function with_defaults(options)
   options = options or {}
-  options.handlers = options.handlers or {}
   options.handler_options = options.handler_options or {}
 
   return {
     open_browser_app = options.open_browser_app or get_open_browser_app(),
     open_browser_args = get_open_browser_args(options.open_browser_args or {}),
-    handlers = {
-      brewfile = helper.ternary(options.handlers.brewfile ~= nil, options.handlers.brewfile, true),
-      plugin = helper.ternary(options.handlers.plugin ~= nil, options.handlers.plugin, true),
-      github = helper.ternary(options.handlers.github ~= nil, options.handlers.github, true),
-      package_json = helper.ternary(
-        options.handlers.package_json ~= nil,
-        options.handlers.package_json,
-        true
-      ),
-      search = helper.ternary(options.handlers.search ~= nil, options.handlers.search, true),
-    },
+    handlers = options.handlers or {},
     handler_options = {
       search_engine = options.handler_options.search_engine or "google",
     },
@@ -93,12 +96,13 @@ local function bind_command()
   end, { nargs = "?", range = 1 })
 end
 
--- setup function
+---@param options GxOptions
 function M.setup(options)
   M.options = with_defaults(options)
   bind_command()
 end
 
+---@type GxOptions
 M.options = nil
 
 return M
