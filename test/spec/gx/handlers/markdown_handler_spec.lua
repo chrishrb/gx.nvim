@@ -15,5 +15,9 @@ describe("url_parser_does_work", function()
       "http://localhost/api/v1/bla",
       handler.handle("v", "[url](http://localhost/api/v1/bla)")
     )
+    assert.equals(
+      "http://localhost/api/v1/bla",
+      handler.handle("v", "[url](http://localhost/api/v1/bla) [url123](https://google.com)")
+    )
   end)
 end)
