@@ -54,17 +54,26 @@ end
 ---@param mode string
 ---@param line string
 ---@param configured_handlers { [string]: (boolean | GxHandler)[] }
----@return string | nil
+---@return {[number]: string}
 function M.get_url(mode, line, configured_handlers, handler_options)
+  local detected_urls_set = {}
   local handlers = resolve_handlers(configured_handlers)
 
   for _, handler in ipairs(handlers) do
     local url = handler.handle(mode, line, handler_options)
 
     if url then
-      return url
+      detected_urls_set[url] = true
     end
   end
+
+  -- turn set into list
+  local detected_urls = {}
+  for s, _ in pairs(detected_urls_set) do
+    detected_urls[#detected_urls + 1] = s
+  end
+
+  return detected_urls
 end
 
 return M

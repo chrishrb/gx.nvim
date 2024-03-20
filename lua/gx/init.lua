@@ -6,6 +6,7 @@ local M = {}
 
 ---@class GxHandlerOptions
 ---@field search_engine string
+---@field select_for_search string
 
 ---@class GxHandler
 ---@field filetypes string[] | nil
@@ -28,18 +29,38 @@ function M.open(mode, line)
   -- cut if in visual mode
   line = helper.cut_with_visual_mode(mode, line)
 
-  local url =
+  local urls =
     require("gx.handler").get_url(mode, line, M.options.handlers, M.options.handler_options)
 
-  if not url then
+  if #urls == 0 then
     return
-  end
+  elseif #urls == 1 then
+    return require("gx.shell").execute_with_error(
+      M.options.open_browser_app,
+      M.options.open_browser_args,
+      urls[1]
+    )
+  elseif #urls == 2 and M.options.handler_options.select_for_search == false then
+    return require("gx.shell").execute_with_error(
+      M.options.open_browser_app,
+      M.options.open_browser_args,
+      urls[2]
+    )
+  else
+    vim.ui.select(urls, {
+      prompt = "Multiple patterns match. Select:",
+    }, function(selected)
+      if not selected then
+        return
+      end
 
-  return require("gx.shell").execute_with_error(
-    M.options.open_browser_app,
-    M.options.open_browser_args,
-    url
-  )
+      return require("gx.shell").execute_with_error(
+        M.options.open_browser_app,
+        M.options.open_browser_args,
+        selected
+      )
+    end)
+  end
 end
 
 -- get the app for opening the webbrowser
@@ -74,6 +95,7 @@ local function with_defaults(options)
     handlers = options.handlers or {},
     handler_options = {
       search_engine = options.handler_options.search_engine or "google",
+      select_for_search = options.handler_options.ignore_select_for_search or false,
     },
   }
 end
