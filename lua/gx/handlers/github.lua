@@ -8,7 +8,7 @@ local M = {
 
 -- navigate to neovim github plugin url
 function M.handle(mode, line, _)
-  local pattern = "%a*%s#(%d*)"
+  local pattern = "#(%d+)"
   local github_issue = helper.find(line, mode, pattern)
   if not github_issue then
     return
