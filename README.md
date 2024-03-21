@@ -52,6 +52,7 @@ require("lazy").setup({
         package_json = true, -- open dependencies from package.json
         search = true, -- search the web/selection on the web if nothing else is found
         jira = { -- custom handler to open Jira tickets (these have higher precedence than builtin handlers)
+          name = "jira", -- set name of handler
           handle = function(mode, line, _)
             local ticket = require("gx.helper").find(line, mode, "(%u+-%d+)")
             if ticket and #ticket < 20 then
@@ -60,6 +61,7 @@ require("lazy").setup({
           end,
         },
         rust = { -- custom handler to open rust's cargo packages
+          name = "rust", -- set name of handler
           filetype = { "toml" }, -- you can also set the required filetype for this handler
           filename = "Cargo.toml", -- or the necessary filename
           handle = function(mode, line, _)
