@@ -2,6 +2,7 @@ local helper = require("gx.helper")
 
 local M = {
   -- only Brewfile
+  name = "brewfile",
   filetype = nil,
   filename = "Brewfile",
 }

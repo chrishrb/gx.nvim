@@ -2,6 +2,7 @@ local helper = require("gx.helper")
 
 local M = {
   -- every filetype and filename
+  name = "commit",
   filetype = nil,
   filename = nil,
 }

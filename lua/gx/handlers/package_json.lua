@@ -2,6 +2,7 @@ local helper = require("gx.helper")
 
 local M = {
   -- only package.json
+  name = "package_json",
   filetype = { "json" },
   filename = "package.json",
 }

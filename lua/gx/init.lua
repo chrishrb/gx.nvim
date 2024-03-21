@@ -6,8 +6,10 @@ local M = {}
 
 ---@class GxHandlerOptions
 ---@field search_engine string
+---@field select_for_search string
 
 ---@class GxHandler
+---@field name string
 ---@field filetypes string[] | nil
 ---@field filename string | nil
 ---@field handle fun(mode: string, line: string, handler_options: GxHandlerOptions | nil)
@@ -17,6 +19,10 @@ local M = {}
 ---@field open_browser_args string[]
 ---@field handlers (boolean | GxHandler)[]
 ---@field handler_options GxHandlerOptions | nil
+
+---@class GxSelection
+---@field name string | nil
+---@field url string
 
 -- search for url with handler
 function M.open(mode, line)
@@ -28,18 +34,35 @@ function M.open(mode, line)
   -- cut if in visual mode
   line = helper.cut_with_visual_mode(mode, line)
 
-  local url =
+  local urls =
     require("gx.handler").get_url(mode, line, M.options.handlers, M.options.handler_options)
 
-  if not url then
+  if #urls == 0 then
     return
-  end
+  elseif #urls == 1 then
+    return require("gx.shell").execute_with_error(
+      M.options.open_browser_app,
+      M.options.open_browser_args,
+      urls[1].url
+    )
+  else
+    vim.ui.select(urls, {
+      prompt = "Multiple patterns match. Select:",
+      format_item = function(item)
+        return item.url .. " (" .. item.name .. ")"
+      end,
+    }, function(selected)
+      if not selected then
+        return
+      end
 
-  return require("gx.shell").execute_with_error(
-    M.options.open_browser_app,
-    M.options.open_browser_args,
-    url
-  )
+      return require("gx.shell").execute_with_error(
+        M.options.open_browser_app,
+        M.options.open_browser_args,
+        selected.url
+      )
+    end)
+  end
 end
 
 -- get the app for opening the webbrowser
@@ -74,6 +97,7 @@ local function with_defaults(options)
     handlers = options.handlers or {},
     handler_options = {
       search_engine = options.handler_options.search_engine or "google",
+      select_for_search = options.handler_options.select_for_search or false,
     },
   }
 end
