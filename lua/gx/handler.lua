@@ -63,11 +63,13 @@ function M.get_url(mode, line, configured_handlers, handler_options)
   for _, handler in ipairs(handlers) do
     local url = handler.handle(mode, line, handler_options)
 
+    -- only use search handler if no other pattern matches or word is selected in visual mode
     if
       url
       and (
         handler.name ~= "search"
         or #detected_urls == 0
+        or mode ~= "n"
         or handler_options.select_for_search == true
       )
     then
