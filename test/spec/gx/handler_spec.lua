@@ -123,15 +123,12 @@ describe("test handler", function()
     stub(helper, "get_filename")
     helper.get_filename.on_call_with().returns("package.json")
 
-    assert.same(
+    assert.same({
       {
-        {
-          ["name"] = "package_json",
-          ["url"] = "https://www.npmjs.com/package/@rushstack/eslint-patch",
-        },
+        ["name"] = "package_json",
+        ["url"] = "https://www.npmjs.com/package/@rushstack/eslint-patch",
       },
-      handler.get_url("v", '"@rushstack/eslint-patch": "^1.2.0",', activated_handlers)
-    )
+    }, handler.get_url("v", '"@rushstack/eslint-patch": "^1.2.0",', activated_handlers))
 
     helper.get_filename:revert()
   end)
@@ -145,13 +142,10 @@ describe("test handler", function()
       end,
     }
 
-    assert.same(
-      {
-        { ["name"] = "custom", ["url"] = "https://from.user.handler" },
-        { ["name"] = "commit", ["url"] = "https://github.com/chrishrb/gx.nvim/commit/1a2b3c4" },
-      },
-      handler.get_url("v", "1a2b3c4", activated_handlers)
-    )
+    assert.same({
+      { ["name"] = "custom", ["url"] = "https://from.user.handler" },
+      { ["name"] = "commit", ["url"] = "https://github.com/chrishrb/gx.nvim/commit/1a2b3c4" },
+    }, handler.get_url("v", "1a2b3c4", activated_handlers))
   end)
 
   it("user defined handler instead of builtin handler", function()
