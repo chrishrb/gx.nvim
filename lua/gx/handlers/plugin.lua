@@ -2,6 +2,7 @@ local helper = require("gx.helper")
 
 local M = {
   -- every filename but only lua
+  name = "nvim-plugin",
   filetype = { "lua", "vim" },
   filename = nil,
 }

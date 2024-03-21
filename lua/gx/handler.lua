@@ -42,8 +42,8 @@ local function resolve_handlers(handlers)
   add_handler(resolved, github_handler, handlers.github and exists.github == nil)
   add_handler(resolved, commit_handler, handlers.commit and exists.commit == nil)
   add_handler(resolved, markdown_handler, handlers.markdown and exists.markdown == nil)
-  add_handler(resolved, url_handler, handlers.url and exists.url == nil)
   add_handler(resolved, cve_handler, handlers.cve and exists.cve == nil)
+  add_handler(resolved, url_handler, handlers.url and exists.url == nil)
   add_handler(resolved, search_handler, handlers.search and exists.search == nil)
   -- ###
 
@@ -54,23 +54,28 @@ end
 ---@param mode string
 ---@param line string
 ---@param configured_handlers { [string]: (boolean | GxHandler)[] }
----@return {[number]: string}
+---@return { [number]: GxSelection }
 function M.get_url(mode, line, configured_handlers, handler_options)
   local detected_urls_set = {}
+  local detected_urls = {}
   local handlers = resolve_handlers(configured_handlers)
 
   for _, handler in ipairs(handlers) do
     local url = handler.handle(mode, line, handler_options)
 
-    if url then
+    if
+      url
+      and (
+        handler.name ~= "search"
+        or #detected_urls == 0
+        or handler_options.select_for_search == true
+      )
+    then
+      if detected_urls_set[url] == nil then
+        detected_urls[#detected_urls + 1] = { ["name"] = handler.name, ["url"] = url }
+      end
       detected_urls_set[url] = true
     end
-  end
-
-  -- turn set into list
-  local detected_urls = {}
-  for s, _ in pairs(detected_urls_set) do
-    detected_urls[#detected_urls + 1] = s
   end
 
   return detected_urls

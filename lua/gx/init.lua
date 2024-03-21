@@ -9,6 +9,7 @@ local M = {}
 ---@field select_for_search string
 
 ---@class GxHandler
+---@field name string
 ---@field filetypes string[] | nil
 ---@field filename string | nil
 ---@field handle fun(mode: string, line: string, handler_options: GxHandlerOptions | nil)
@@ -18,6 +19,10 @@ local M = {}
 ---@field open_browser_args string[]
 ---@field handlers (boolean | GxHandler)[]
 ---@field handler_options GxHandlerOptions | nil
+
+---@class GxSelection
+---@field name string | nil
+---@field url string
 
 -- search for url with handler
 function M.open(mode, line)
@@ -38,17 +43,14 @@ function M.open(mode, line)
     return require("gx.shell").execute_with_error(
       M.options.open_browser_app,
       M.options.open_browser_args,
-      urls[1]
-    )
-  elseif #urls == 2 and M.options.handler_options.select_for_search == false then
-    return require("gx.shell").execute_with_error(
-      M.options.open_browser_app,
-      M.options.open_browser_args,
-      urls[2]
+      urls[1].url
     )
   else
     vim.ui.select(urls, {
       prompt = "Multiple patterns match. Select:",
+      format_item = function(item)
+        return item.url .. " (" .. item.name .. ")"
+      end,
     }, function(selected)
       if not selected then
         return
@@ -57,7 +59,7 @@ function M.open(mode, line)
       return require("gx.shell").execute_with_error(
         M.options.open_browser_app,
         M.options.open_browser_args,
-        selected
+        selected.url
       )
     end)
   end
@@ -95,7 +97,7 @@ local function with_defaults(options)
     handlers = options.handlers or {},
     handler_options = {
       search_engine = options.handler_options.search_engine or "google",
-      select_for_search = options.handler_options.ignore_select_for_search or false,
+      select_for_search = options.handler_options.select_for_search or false,
     },
   }
 end
