@@ -1,16 +1,18 @@
 M = {}
 
-local function parse_git_output(result)
-  if not result or #result < 1 then
+local function parse_git_output(result, remote)
+  if not result then
     return
   end
 
-  local _, _, domain, repository = string.find(result[1], "^origin\t.*git@(.*%..*):(.*/.*).git")
+  local _, _, domain, repository = string.find(result, "^" .. remote .. "\t.*git@(.*%..*):(.*/.*) ")
+
   if domain and repository then
+    domain = domain:gsub("%.git", "")
     return "https://" .. domain .. "/" .. repository
   end
 
-  local _, _, url = string.find(result[1], "origin\t(.*)%s")
+  local _, _, url = string.find(result, remote .. "\t(.*)%s")
   if url then
     return url
   end
@@ -26,7 +28,16 @@ function M.get_remote_url()
     return
   end
 
-  local url = parse_git_output(result)
+  local url
+  for _, remote in ipairs({ "upstream", "origin" }) do
+    for _, line in ipairs(result) do
+      url = parse_git_output(line, remote)
+      if url then
+        goto loopend
+      end
+    end
+  end
+  ::loopend::
   if not url then
     notifier.warn("No remote git repository found!")
     return
