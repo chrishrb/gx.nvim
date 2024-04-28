@@ -20,7 +20,12 @@ function M.handle(mode, line, handler_options)
     remotes = remotes(vim.fn.expand("%:p"))
   end
 
-  local git_url = require("gx.git").get_remote_url(remotes)
+  local push = handler_options.push
+  if type(push) == "function" then
+    push = push(vim.fn.expand("%:p"))
+  end
+
+  local git_url = require("gx.git").get_remote_url(remotes, push)
   if not git_url then
     return
   end

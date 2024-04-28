@@ -85,6 +85,11 @@ require("lazy").setup({
             end
             return { "upstream", "origin" }
         end,
+
+        git_remote_push = false, -- use the push url for git issue linking,
+        git_remote_push = function(fname) -- you can also pass in a function
+          return fname:match("myproject")
+        end,
       },
     } end,
   },
