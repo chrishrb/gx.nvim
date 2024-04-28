@@ -13,6 +13,7 @@
 * open github issues directly in the browser (e.g. `Fixes #22` opens `https://github.com/chrishrb/gx.nvim/issues/22`)
 * dependencies from `package.json` (e.g. line `"express": "^4.18.2",` in the `package.json` opens `https://www.npmjs.com/package/express`)
 * formulae and casks from `Brewfile` (e.g. line `brew "neovim"` in the `Brewfile` opens `https://formulae.brew.sh/formula/neovim`)
+* go packages from an import statement (e.g. line `import "github.com/joho/godotenv"` opens `https://pkg.go.dev/github.com/joho/godotenv`)
 * if there is no url found under the cursor, the word/selection is automatically searched on the web
 * supports user defined handlers to extend the functionality
 * support for macOS, Linux and Windows
@@ -51,6 +52,7 @@ require("lazy").setup({
         brewfile = true, -- open Homebrew formulaes and casks
         package_json = true, -- open dependencies from package.json
         search = true, -- search the web/selection on the web if nothing else is found
+        go = true, -- open pkg.go.dev from an import statement (uses treesitter)
         jira = { -- custom handler to open Jira tickets (these have higher precedence than builtin handlers)
           name = "jira", -- set name of handler
           handle = function(mode, line, _)
