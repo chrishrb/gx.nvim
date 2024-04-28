@@ -16,7 +16,7 @@ local function parse_git_output(result)
   end
 end
 
-function M.get_remote_url(remotes, push, owner)
+function M.get_remote_url(remotes, push, owner, repo)
   local notifier = require("gx.notifier")
 
   local url = nil
@@ -41,6 +41,9 @@ function M.get_remote_url(remotes, push, owner)
   end
   if type(owner) == "string" and owner ~= "" then
     local domain, repository = url:match("^https?://([^/]+)/[^/]+/([^/]*)")
+    if repo ~= "" then
+      repository = repo
+    end
     url = string.format("https://%s/%s/%s", domain, owner, repository)
   end
 

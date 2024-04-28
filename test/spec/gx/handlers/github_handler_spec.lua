@@ -40,4 +40,10 @@ describe("github_handler_does_work", function()
       handler.handle("v", "See foouser#42", handler_options)
     )
   end)
+  it("parses owner/repo#issue format", function()
+    assert.equals(
+      "https://github.com/neovim/neovim/issues/23943",
+      handler.handle("v", "Waiting on upstream neovim/neovim#23943", handler_options)
+    )
+  end)
 end)
