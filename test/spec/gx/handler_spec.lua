@@ -5,6 +5,9 @@ local assert = require("luassert")
 
 describe("test handler", function()
   local activated_handlers
+  local handler_options = {
+    git_remotes = { "upstream", "origin" },
+  }
 
   before_each(function()
     before_mock_filetype = vim.bo.filetype
@@ -26,14 +29,17 @@ describe("test handler", function()
 
     assert.same(
       { { ["name"] = "url", ["url"] = "https://github.com" } },
-      handler.get_url("v", "github.com", activated_handlers)
+      handler.get_url("v", "github.com", activated_handlers, handler_options)
     )
     assert.same(
       { { ["name"] = "url", ["url"] = "https://github.com" } },
-      handler.get_url("v", "https://github.com", activated_handlers)
+      handler.get_url("v", "https://github.com", activated_handlers, handler_options)
     )
-    assert.same({}, handler.get_url("v", '"example_user/example_plugin"', activated_handlers))
-    assert.same({}, handler.get_url("v", "Fixes #22", activated_handlers))
+    assert.same(
+      {},
+      handler.get_url("v", '"example_user/example_plugin"', activated_handlers, handler_options)
+    )
+    assert.same({}, handler.get_url("v", "Fixes #22", activated_handlers, handler_options))
   end)
 
   it("plugin handler on", function()
@@ -44,15 +50,15 @@ describe("test handler", function()
 
     assert.same(
       { { ["name"] = "url", ["url"] = "https://github.com" } },
-      handler.get_url("v", "github.com", activated_handlers)
+      handler.get_url("v", "github.com", activated_handlers, handler_options)
     )
     assert.same(
       { { ["name"] = "url", ["url"] = "https://github.com" } },
-      handler.get_url("v", "https://github.com", activated_handlers)
+      handler.get_url("v", "https://github.com", activated_handlers, handler_options)
     )
     assert.same(
       { { ["name"] = "nvim-plugin", ["url"] = "https://github.com/example_user/example_plugin" } },
-      handler.get_url("v", '"example_user/example_plugin"', activated_handlers)
+      handler.get_url("v", '"example_user/example_plugin"', activated_handlers, handler_options)
     )
   end)
 
@@ -65,15 +71,15 @@ describe("test handler", function()
 
     assert.same(
       { { ["name"] = "url", ["url"] = "https://github.com" } },
-      handler.get_url("v", "github.com", activated_handlers)
+      handler.get_url("v", "github.com", activated_handlers, handler_options)
     )
     assert.same(
       { { ["name"] = "url", ["url"] = "https://github.com" } },
-      handler.get_url("v", "https://github.com", activated_handlers)
+      handler.get_url("v", "https://github.com", activated_handlers, handler_options)
     )
     assert.same(
       { { ["name"] = "nvim-plugin", ["url"] = "https://github.com/example_user/example_plugin" } },
-      handler.get_url("v", '"example_user/example_plugin"', activated_handlers)
+      handler.get_url("v", '"example_user/example_plugin"', activated_handlers, handler_options)
     )
   end)
 
@@ -85,13 +91,16 @@ describe("test handler", function()
 
     assert.same(
       { { ["name"] = "url", ["url"] = "https://github.com" } },
-      handler.get_url("v", "github.com", activated_handlers)
+      handler.get_url("v", "github.com", activated_handlers, handler_options)
     )
     assert.same(
       { { ["name"] = "url", ["url"] = "https://github.com" } },
-      handler.get_url("v", "https://github.com", activated_handlers)
+      handler.get_url("v", "https://github.com", activated_handlers, handler_options)
     )
-    assert.same({}, handler.get_url("v", '"example_user/example_plugin"', activated_handlers))
+    assert.same(
+      {},
+      handler.get_url("v", '"example_user/example_plugin"', activated_handlers, handler_options)
+    )
   end)
 
   it("github handler on", function()
@@ -102,15 +111,15 @@ describe("test handler", function()
 
     assert.same(
       { { ["name"] = "url", ["url"] = "https://github.com" } },
-      handler.get_url("v", "github.com", activated_handlers)
+      handler.get_url("v", "github.com", activated_handlers, handler_options)
     )
     assert.same(
       { { ["name"] = "url", ["url"] = "https://github.com" } },
-      handler.get_url("v", "https://github.com", activated_handlers)
+      handler.get_url("v", "https://github.com", activated_handlers, handler_options)
     )
     assert.same(
       { { ["name"] = "github", ["url"] = "https://github.com/chrishrb/gx.nvim/issues/22" } },
-      handler.get_url("v", "Fixes #22", activated_handlers)
+      handler.get_url("v", "Fixes #22", activated_handlers, handler_options)
     )
   end)
 
@@ -123,12 +132,20 @@ describe("test handler", function()
     stub(helper, "get_filename")
     helper.get_filename.on_call_with().returns("package.json")
 
-    assert.same({
+    assert.same(
       {
-        ["name"] = "package_json",
-        ["url"] = "https://www.npmjs.com/package/@rushstack/eslint-patch",
+        {
+          ["name"] = "package_json",
+          ["url"] = "https://www.npmjs.com/package/@rushstack/eslint-patch",
+        },
       },
-    }, handler.get_url("v", '"@rushstack/eslint-patch": "^1.2.0",', activated_handlers))
+      handler.get_url(
+        "v",
+        '"@rushstack/eslint-patch": "^1.2.0",',
+        activated_handlers,
+        handler_options
+      )
+    )
 
     helper.get_filename:revert()
   end)
@@ -145,7 +162,7 @@ describe("test handler", function()
     assert.same({
       { ["name"] = "custom", ["url"] = "https://from.user.handler" },
       { ["name"] = "commit", ["url"] = "https://github.com/chrishrb/gx.nvim/commit/1a2b3c4" },
-    }, handler.get_url("v", "1a2b3c4", activated_handlers))
+    }, handler.get_url("v", "1a2b3c4", activated_handlers, handler_options))
   end)
 
   it("user defined handler instead of builtin handler", function()
@@ -158,7 +175,7 @@ describe("test handler", function()
 
     assert.same(
       { { ["url"] = "https://from.user.handler" } },
-      handler.get_url("v", "1a2b3c4", activated_handlers)
+      handler.get_url("v", "1a2b3c4", activated_handlers, handler_options)
     )
   end)
 end)
