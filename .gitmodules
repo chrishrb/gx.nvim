@@ -6,3 +6,7 @@
 	path = test/vendor/plenary.nvim
 	url = https://github.com/nvim-lua/plenary.nvim
   ignore = dirty
+[submodule "test/vendor/nvim-treesitter"]
+	path = test/vendor/nvim-treesitter
+	url = https://github.com/nvim-treesitter/nvim-treesitter
+  ignore = dirty
