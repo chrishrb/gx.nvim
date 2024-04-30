@@ -16,11 +16,8 @@ local function parse_git_output(result)
   end
 end
 
-function M.get_remote_url(remotes, push, owner, repo)
-  local notifier = require("gx.notifier")
-
+local function discover_remote(remotes, push, path)
   local url = nil
-  local path = vim.fn.expand("%:p:h")
   for _, remote in ipairs(remotes) do
     local args = { "-C", path, "remote", "get-url", remote }
     if push then
@@ -30,9 +27,20 @@ function M.get_remote_url(remotes, push, owner, repo)
     if exit_code == 0 then
       url = parse_git_output(result)
       if url then
-        break
+        return url
       end
     end
+  end
+  return url
+end
+
+function M.get_remote_url(remotes, push, owner, repo)
+  local notifier = require("gx.notifier")
+
+  local path = vim.fn.expand("%:p:h")
+  local url = discover_remote(remotes, push, path)
+  if not url then
+    url = discover_remote(remotes, push, vim.loop.cwd())
   end
 
   if not url and (owner ~= "" and repo ~= "") then -- fallback to github if owner and repo are present
