@@ -9,9 +9,9 @@ local M = {
 
 -- navigate to neovim github plugin url
 function M.handle(mode, line, handler_options)
-  local match = helper.find(line, mode, "([%w-_]+/[%w-_]+#%d+)")
+  local match = helper.find(line, mode, "([%w-_.]+/[%w-_.]+#%d+)")
   if not match then
-    match = helper.find(line, mode, "([%w-_]+#%d+)")
+    match = helper.find(line, mode, "([%w-_.]+#%d+)")
   end
   if not match then
     match = helper.find(line, mode, "(#%d+)")

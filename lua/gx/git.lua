@@ -35,6 +35,9 @@ function M.get_remote_url(remotes, push, owner, repo)
     end
   end
 
+  if not url and (owner ~= "" and repo ~= "") then -- fallback to github if owner and repo are present
+    url = "https://github.com/foo/bar"
+  end
   if not url then
     notifier.warn("No remote git repository found!")
     return
