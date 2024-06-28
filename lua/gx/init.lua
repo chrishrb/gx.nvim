@@ -79,10 +79,10 @@ local function get_open_browser_app()
 end
 
 -- get the args for opening the webbrowser
-local function get_open_browser_args(args)
+local function get_open_browser_args()
+  local args = {}
   if sysname == "Windows_NT" then
-    local win_args = { "start", "explorer.exe" }
-    return helper.concat_tables(win_args, args)
+    args = { "start", "explorer.exe" }
   end
   return args
 end
@@ -93,7 +93,7 @@ local function with_defaults(options)
 
   return {
     open_browser_app = options.open_browser_app or get_open_browser_app(),
-    open_browser_args = get_open_browser_args(options.open_browser_args or {}),
+    open_browser_args = options.open_browser_args or get_open_browser_args(),
     handlers = options.handlers or {},
     handler_options = {
       search_engine = options.handler_options.search_engine or "google",
