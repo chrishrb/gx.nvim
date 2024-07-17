@@ -1,25 +1,22 @@
 local shell = {}
 
-function shell.execute(command, args)
-  -- TODO: This could use vim.system() in 0.10+
-  local Job = require("plenary.job")
+function shell.execute(command, args, options)
+  local cmd = { command, unpack(args) }
+  local opts = vim.tbl_extend("force", {}, options)
 
-  local result, return_val = Job:new({
-    command = command,
-    args = args,
-  }):sync()
+  local obj = vim.system(cmd, opts):wait()
 
-  return return_val, result
+  return obj.code, (obj.stdout or "")
 end
 
-function shell.execute_with_error(command, args, url)
+function shell.execute_with_error(command, args, options, url)
   local shell_args = {}
   for _, v in ipairs(args) do
     table.insert(shell_args, v)
   end
   table.insert(shell_args, url)
 
-  local return_val, _ = shell.execute(command, shell_args)
+  local return_val, _ = shell.execute(command, shell_args, options)
 
   if return_val ~= 0 then
     local ret = {}
