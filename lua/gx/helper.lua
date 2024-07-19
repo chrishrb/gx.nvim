@@ -127,6 +127,7 @@ function M.get_search_url_from_engine(engine)
     bing = "https://www.bing.com/search?q=",
     duckduckgo = "https://duckduckgo.com/?q=",
     ecosia = "https://www.ecosia.org/search?q=",
+    yandex = "https://ya.ru/search?text=",
   }
   if search_url[engine] == nil then
     return engine
