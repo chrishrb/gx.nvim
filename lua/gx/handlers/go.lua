@@ -71,7 +71,6 @@ local function get_url_from_response(res_tbl)
     if is_internal(url) then
       return nil
     end
-
     return url
   end
 
