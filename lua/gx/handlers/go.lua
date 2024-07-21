@@ -114,6 +114,9 @@ function M.handle()
 
   local line = vim.api.nvim_buf_get_lines(0, start_line, end_line + 1, false)[1]
   local pkg = line:sub(start_col + 2, end_col - 1) -- remove quotes
+  if is_internal(pkg) then
+    return nil
+  end
 
   return "https://pkg.go.dev/" .. pkg
 end
