@@ -13,6 +13,21 @@ local function is_gopls_attached()
   return #vim.lsp.get_clients({ name = "gopls" }) > 0
 end
 
+local function get_mode_name()
+  local files = vim.fs.find("go.mod", { upward = true })
+  if #files == 0 or vim.tbl_isempty(files) then
+    return ""
+  end
+
+  local mod = files[1]
+  for line in io.lines(mod) do
+    local name = line:match("^module%s+([^\n]+)")
+    return name
+  end
+
+  return ""
+end
+
 local function request_hover_info()
   local method = "textDocument/hover"
   local params = vim.lsp.util.make_position_params()
@@ -20,13 +35,26 @@ local function request_hover_info()
   return vim.lsp.buf_request_sync(0, method, params)
 end
 
--- TODO check if it is an internal pkg
 local function get_link_from_response(res_tbl)
   local res = res_tbl[1]
   if res and res.result then
     local value = res.result.contents.value
-    return value:match("https://pkg%.go%.dev[%w.#/]+")
+    -- Test case
+    -- https://pkg.go.dev/github.com/json-iterator/go@v1.1.12#API.Unmarshal
+    -- https://pkg.go.dev/context#Context
+    local link = value:match("%(https://pkg%.go%.dev[%w%p]+%)")
+    if not link then
+      return
+    end
+    link = link:sub(2, -2)
+
+    local mod = get_mode_name()
+    if link:find(mod) then
+      return nil
+    end
+    return link
   end
+
   return nil
 end
 
