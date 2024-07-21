@@ -13,19 +13,40 @@ local function is_gopls_attached()
   return #vim.lsp.get_clients({ name = "gopls" }) > 0
 end
 
+local cached_mod_name
 local function get_mode_name()
+  if cached_mod_name then
+    return cached_mod_name
+  end
+
   local files = vim.fs.find("go.mod", { upward = true })
   if #files == 0 or vim.tbl_isempty(files) then
     return ""
   end
 
   local mod = files[1]
-  for line in io.lines(mod) do
-    local name = line:match("^module%s+([^\n]+)")
-    return name
+  local file, err = io.open(mod, "r")
+  if not file then
+    print("[gx.nvim]Error opening go.mod: " .. (err or "unknown error"))
+    return ""
   end
 
+  for line in file:lines() do
+    local name = line:match("^module%s+([^\n]+)")
+    if name then
+      file:close()
+      cached_mod_name = name
+      return name
+    end
+  end
+
+  file:close()
   return ""
+end
+
+local function is_internal(url)
+  local mod = get_mode_name()
+  return mod ~= "" and url:find(mod, 1, true)
 end
 
 local function request_hover_info()
@@ -35,24 +56,23 @@ local function request_hover_info()
   return vim.lsp.buf_request_sync(0, method, params)
 end
 
-local function get_link_from_response(res_tbl)
+local function get_url_from_response(res_tbl)
   local res = res_tbl[1]
   if res and res.result then
     local value = res.result.contents.value
     -- Test case
     -- https://pkg.go.dev/github.com/json-iterator/go@v1.1.12#API.Unmarshal
     -- https://pkg.go.dev/context#Context
-    local link = value:match("%(https://pkg%.go%.dev[%w%p]+%)")
-    if not link then
-      return
-    end
-    link = link:sub(2, -2)
-
-    local mod = get_mode_name()
-    if link:find(mod) then
+    local url = value:match("%(https://pkg%.go%.dev[%S]+%)")
+    if not url then
       return nil
     end
-    return link
+    url = url:sub(2, -2)
+    if is_internal(url) then
+      return nil
+    end
+
+    return url
   end
 
   return nil
@@ -81,7 +101,7 @@ function M.handle()
         return
       end
 
-      local link = get_link_from_response(res_tbl)
+      local link = get_url_from_response(res_tbl)
       if link then
         return link
       end
