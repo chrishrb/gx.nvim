@@ -24,23 +24,17 @@ local function get_mode_name()
     return ""
   end
 
-  local mod = files[1]
-  local file, err = io.open(mod, "r")
-  if not file then
-    print("[gx.nvim]Error opening go.mod: " .. (err or "unknown error"))
+  local file = files[1]
+  local line = vim.fn.readfile(file, "", 1)
+  if #line == 0 then
     return ""
   end
-
-  for line in file:lines() do
-    local name = line:match("^module%s+([^\n]+)")
-    if name then
-      file:close()
-      cached_mod_name = name
-      return name
-    end
+  local mod_name = line[1]:match("^module%s+([^\n]+)")
+  if mod_name then
+    cached_mod_name = mod_name
+    return mod_name
   end
 
-  file:close()
   return ""
 end
 
