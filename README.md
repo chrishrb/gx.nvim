@@ -21,7 +21,7 @@
 
 ## ⚡️ Requirements
 
-* Neovim >= 0.5.0
+* Neovim >= 0.10.0
 * macOS (`open`), Linux (`xdg-open`) or Windows (`powershell.exe start explorer.exe`)
 
 ## 📦 Installation
@@ -46,6 +46,7 @@ require("lazy").setup({
     config = function() require("gx").setup {
       open_browser_app = "os_specific", -- specify your browser app; default for macOS is "open", Linux "xdg-open" and Windows "powershell.exe"
       open_browser_args = { "--background" }, -- specify any arguments, such as --background for macOS' "open".
+      open_browser_optioins = {}, -- specify options passed to `vim.system`, see `vim.SystemOpts`
       handlers = {
         plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
         github = true, -- open github issues
