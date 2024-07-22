@@ -17,6 +17,7 @@ local M = {}
 ---@class GxOptions
 ---@field open_browser_app string
 ---@field open_browser_args string[]
+---@field open_browser_options table
 ---@field handlers (boolean | GxHandler)[]
 ---@field handler_options GxHandlerOptions | nil
 
@@ -43,6 +44,7 @@ function M.open(mode, line)
     return require("gx.shell").execute_with_error(
       M.options.open_browser_app,
       M.options.open_browser_args,
+      M.options.open_browser_options,
       urls[1].url
     )
   else
@@ -59,6 +61,7 @@ function M.open(mode, line)
       return require("gx.shell").execute_with_error(
         M.options.open_browser_app,
         M.options.open_browser_args,
+        M.options.open_browser_options,
         selected.url
       )
     end)
@@ -94,6 +97,7 @@ local function with_defaults(options)
   return {
     open_browser_app = options.open_browser_app or get_open_browser_app(),
     open_browser_args = options.open_browser_args or get_open_browser_args(),
+    open_browser_options = {},
     handlers = options.handlers or {},
     handler_options = {
       search_engine = options.handler_options.search_engine or "google",
