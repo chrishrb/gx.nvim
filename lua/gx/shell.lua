@@ -2,6 +2,7 @@ local shell = {}
 
 function shell.execute(command, args, options)
   local cmd = { command, unpack(args) }
+  options = options or {}
   local opts = vim.tbl_extend("force", {}, options)
 
   local obj = vim.system(cmd, opts):wait()
