@@ -83,6 +83,9 @@ function M.handle()
     else
       node = node:parent()
     end
+    if not node then
+      return
+    end
 
     if not is_import_spec(node) then
       if not is_gopls_attached() then
@@ -94,9 +97,9 @@ function M.handle()
         return
       end
 
-      local link = get_url_from_response(res_tbl)
-      if link then
-        return link
+      local url = get_url_from_response(res_tbl)
+      if url then
+        return url
       end
 
       return
@@ -109,7 +112,7 @@ function M.handle()
   local line = vim.api.nvim_buf_get_lines(0, start_line, end_line + 1, false)[1]
   local pkg = line:sub(start_col + 2, end_col - 1) -- remove quotes
   if is_internal(pkg) then
-    return nil
+    return
   end
 
   return "https://pkg.go.dev/" .. pkg
