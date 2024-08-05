@@ -77,8 +77,8 @@ function M.get_url(mode, line, configured_handlers, handler_options)
     then
       if detected_urls_set[url] == nil then
         detected_urls[#detected_urls + 1] = { ["name"] = handler.name, ["url"] = url }
+        detected_urls_set[url] = true
       end
-      detected_urls_set[url] = true
     end
   end
 
