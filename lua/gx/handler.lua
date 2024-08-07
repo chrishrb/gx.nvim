@@ -12,6 +12,9 @@ local search_handler = require("gx.handlers.search")
 
 local M = {}
 
+---@param handlers table<string, boolean|GxHandler>
+---@param handler boolean|GxHandler
+---@param active boolean
 local function add_handler(handlers, handler, active)
   if
     active == false
@@ -23,7 +26,7 @@ local function add_handler(handlers, handler, active)
   handlers[#handlers + 1] = handler
 end
 
----@param handlers { [string]: (boolean | GxHandler)[] }
+---@param handlers table<string, boolean|GxHandler>
 ---@return GxHandler[]
 local function resolve_handlers(handlers)
   local resolved = {}
@@ -55,8 +58,9 @@ end
 -- handler function
 ---@param mode string
 ---@param line string
----@param configured_handlers { [string]: (boolean | GxHandler)[] }
----@return { [number]: GxSelection }
+---@param configured_handlers table<string, boolean|GxHandler>
+---@param handler_options GxHandlerOptions
+---@return GxSelection[]
 function M.get_url(mode, line, configured_handlers, handler_options)
   local detected_urls_set = {}
   local detected_urls = {}
@@ -77,8 +81,8 @@ function M.get_url(mode, line, configured_handlers, handler_options)
     then
       if detected_urls_set[url] == nil then
         detected_urls[#detected_urls + 1] = { ["name"] = handler.name, ["url"] = url }
+        detected_urls_set[url] = true
       end
-      detected_urls_set[url] = true
     end
   end
 

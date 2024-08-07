@@ -6,22 +6,24 @@ local M = {}
 
 ---@class GxHandlerOptions
 ---@field search_engine string
----@field select_for_search string
+---@field select_for_search boolean
+---@field git_remotes string[]
+---@field git_remote_push boolean
 
 ---@class GxHandler
 ---@field name string
----@field filetypes string[] | nil
----@field filename string | nil
----@field handle fun(mode: string, line: string, handler_options: GxHandlerOptions | nil)
+---@field filetype string[]?
+---@field filename string?
+---@field handle fun(mode: string, line: string, handler_options: GxHandlerOptions): string?
 
 ---@class GxOptions
 ---@field open_browser_app string
 ---@field open_browser_args string[]
----@field handlers (boolean | GxHandler)[]
----@field handler_options GxHandlerOptions | nil
+---@field handlers table<string, boolean|GxHandler>
+---@field handler_options GxHandlerOptions
 
 ---@class GxSelection
----@field name string | nil
+---@field name string?
 ---@field url string
 
 -- search for url with handler
@@ -87,6 +89,7 @@ local function get_open_browser_args()
   return args
 end
 
+---@param options GxOptions
 local function with_defaults(options)
   options = options or {}
   options.handler_options = options.handler_options or {}

@@ -1,5 +1,6 @@
 local helper = require("gx.helper")
 
+---@type GxHandler
 local M = {
   -- every filetype and filename
   name = "github",
@@ -26,7 +27,7 @@ function M.handle(mode, line, handler_options)
     remotes = remotes(vim.fn.expand("%:p"))
   end
 
-  local push = handler_options.push
+  local push = handler_options.git_remote_push
   if type(push) == "function" then
     push = push(vim.fn.expand("%:p"))
   end

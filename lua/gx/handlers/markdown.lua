@@ -1,5 +1,6 @@
 local helper = require("gx.helper")
 
+---@type GxHandler
 local M = {
   -- every filetype and filename
   name = "markdown",

@@ -1,5 +1,6 @@
 local helper = require("gx.helper")
 
+---@type GxHandler
 local M = {
   -- every filename but only lua
   name = "nvim-plugin",

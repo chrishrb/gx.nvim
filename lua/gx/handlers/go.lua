@@ -1,3 +1,4 @@
+---@type GxHandler
 local M = {
   -- every filetype and filename
   name = "go",
