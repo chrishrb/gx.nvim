@@ -1,9 +1,16 @@
 local shell = {}
 
+--- Executes a command via vim.system or plenary.Job
+---@param command string
+---@param args table
+---@return integer,table
 function shell.execute(command, args)
-  -- TODO: This could use vim.system() in 0.10+
-  local Job = require("plenary.job")
+  if vim.fn.has("nvim-0.10") == 1 then
+    local result = vim.system({ command, unpack(args) }):wait()
+    return result.code, vim.split(result.stdout, "\n")
+  end
 
+  local Job = require("plenary.job")
   local result, return_val = Job:new({
     command = command,
     args = args,
