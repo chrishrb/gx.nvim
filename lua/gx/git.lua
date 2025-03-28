@@ -1,16 +1,17 @@
 M = {}
 
 local function parse_git_output(result)
-  if not result or #result < 1 then
+  if not result or #result < 0 then
     return
   end
 
-  local domain, repository = result[1]:gsub("%.git%s*$", ""):match("@(.*%..*):(.*)$")
+  result = vim.trim(result)
+  local domain, repository = result:gsub("%.git%s*$", ""):match("@(.*%..*):(.*)$")
   if domain and repository then
     return "https://" .. domain .. "/" .. repository
   end
 
-  local url = result[1]:gsub("%.git%s*$", ""):match("^https?://.+")
+  local url = result:gsub("%.git%s*$", ""):match("^https?://.+")
   if url then
     return url
   end
