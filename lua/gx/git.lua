@@ -1,4 +1,4 @@
-M = {}
+local M = {}
 
 local function parse_git_output(result)
   if not result or #result < 1 then
