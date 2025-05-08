@@ -1,5 +1,3 @@
-local helper = require("gx.helper")
-
 ---@type GxHandler
 local M = {
   -- only package.json
