@@ -9,6 +9,7 @@ local M = {}
 ---@field select_for_search boolean
 ---@field git_remotes string[]
 ---@field git_remote_push boolean
+---@field [string] any
 
 ---@class GxHandler
 ---@field name string
