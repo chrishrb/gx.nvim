@@ -46,6 +46,12 @@ require("lazy").setup({
     config = function() require("gx").setup {
       open_browser_app = "os_specific", -- specify your browser app; default for macOS is "open", Linux "xdg-open" and Windows "powershell.exe"
       open_browser_args = { "--background" }, -- specify any arguments, such as --background for macOS' "open".
+
+      open_callback = false, -- optional callback function to be called with the selected url on open
+      open_callback = function(url)
+        vim.fn.setreg("+", url) -- for example, you can set the url to clipboard here
+      end,
+
       handlers = {
         plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
         github = true, -- open github issues

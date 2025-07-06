@@ -43,6 +43,9 @@ function M.open(mode, line)
   if #urls == 0 then
     return
   elseif #urls == 1 then
+    if M.options.open_callback then
+      M.options.open_callback(urls[1].url)
+    end
     return require("gx.shell").execute_with_error(
       M.options.open_browser_app,
       M.options.open_browser_args,
@@ -58,7 +61,9 @@ function M.open(mode, line)
       if not selected then
         return
       end
-
+      if M.options.open_callback then
+        M.options.open_callback(selected.url)
+      end
       return require("gx.shell").execute_with_error(
         M.options.open_browser_app,
         M.options.open_browser_args,
@@ -95,6 +100,7 @@ local function with_defaults(options)
   options = options or {}
   options.open_browser_app = options.open_browser_app or get_open_browser_app()
   options.open_browser_args = options.open_browser_args or get_open_browser_args()
+  options.open_callback = options.open_callback or false,
   options.handler_options = options.handler_options or {}
   options.handler_options.search_engine = options.handler_options.search_engine or "google"
   options.handler_options.select_for_search = options.handler_options.select_for_search or false
