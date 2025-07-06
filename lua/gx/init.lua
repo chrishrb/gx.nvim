@@ -20,6 +20,7 @@ local M = {}
 ---@class GxOptions
 ---@field open_browser_app string
 ---@field open_browser_args string[]
+---@field open_callback boolean|function
 ---@field handlers table<string, boolean|GxHandler>
 ---@field handler_options GxHandlerOptions
 
@@ -100,7 +101,7 @@ local function with_defaults(options)
   options = options or {}
   options.open_browser_app = options.open_browser_app or get_open_browser_app()
   options.open_browser_args = options.open_browser_args or get_open_browser_args()
-  options.open_callback = options.open_callback or false,
+  options.open_callback = options.open_callback or false
   options.handler_options = options.handler_options or {}
   options.handler_options.search_engine = options.handler_options.search_engine or "google"
   options.handler_options.select_for_search = options.handler_options.select_for_search or false
