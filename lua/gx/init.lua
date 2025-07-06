@@ -9,6 +9,7 @@ local M = {}
 ---@field select_for_search boolean
 ---@field git_remotes string[]
 ---@field git_remote_push boolean
+---@field [string] any
 
 ---@class GxHandler
 ---@field name string
@@ -97,20 +98,16 @@ end
 ---@param options GxOptions
 local function with_defaults(options)
   options = options or {}
+  options.open_browser_app = options.open_browser_app or get_open_browser_app()
+  options.open_browser_args = options.open_browser_args or get_open_browser_args()
+  options.open_callback = options.open_callback or false,
   options.handler_options = options.handler_options or {}
-
-  return {
-    open_browser_app = options.open_browser_app or get_open_browser_app(),
-    open_browser_args = options.open_browser_args or get_open_browser_args(),
-    open_callback = options.open_callback or false,
-    handlers = options.handlers or {},
-    handler_options = {
-      search_engine = options.handler_options.search_engine or "google",
-      select_for_search = options.handler_options.select_for_search or false,
-      git_remotes = options.handler_options.git_remotes or { "upstream", "origin" },
-      git_remote_push = options.handler_options.git_remote_push or false,
-    },
-  }
+  options.handler_options.search_engine = options.handler_options.search_engine or "google"
+  options.handler_options.select_for_search = options.handler_options.select_for_search or false
+  options.handler_options.git_remotes = options.handler_options.git_remotes
+    or { "upstream", "origin" }
+  options.handler_options.git_remote_push = options.handler_options.git_remote_push or false
+  return options
 end
 
 local function bind_command()

@@ -1,6 +1,5 @@
 ---@type GxHandler
 local M = {
-  -- every filetype and filename
   name = "go",
   filetype = { "go" },
   filename = nil,
@@ -72,7 +71,7 @@ local function get_url_from_response(res_tbl)
   return nil
 end
 
-function M.handle()
+function M.handle(_, _, _)
   local node = vim.treesitter.get_node()
   if not node then
     return
