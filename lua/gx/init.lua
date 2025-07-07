@@ -102,6 +102,7 @@ local function with_defaults(options)
   options.open_browser_app = options.open_browser_app or get_open_browser_app()
   options.open_browser_args = options.open_browser_args or get_open_browser_args()
   options.open_callback = options.open_callback or false
+  options.handlers = options.handlers or {}
   options.handler_options = options.handler_options or {}
   options.handler_options.search_engine = options.handler_options.search_engine or "google"
   options.handler_options.select_for_search = options.handler_options.select_for_search or false
