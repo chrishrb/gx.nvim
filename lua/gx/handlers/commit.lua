@@ -30,7 +30,13 @@ function M.handle(mode, line, handler_options)
   if not git_url then
     return
   end
-  return git_url .. "/commit/" .. commit_hash
+
+  -- Check if the URL is from BitBucket, then use "/commits/" instead of "/commit/"
+  if git_url:match("bitbucket%.") then
+    return git_url .. "/commits/" .. commit_hash
+  else
+    return git_url .. "/commit/" .. commit_hash
+  end
 end
 
 return M
