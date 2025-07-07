@@ -37,6 +37,13 @@ describe("url_parser_does_work", function()
       "http://localhost:8080/backend/swagger-ui/#/project-controller",
       handler.handle("v", "http://localhost:8080/backend/swagger-ui/#/project-controller")
     )
+    assert.equals(
+      "https://golang-jwt.github.io/jwt/usage/signing_methods/#signing-methods-and-key-types",
+      handler.handle(
+        "v",
+        "https://golang-jwt.github.io/jwt/usage/signing\\_methods/#signing-methods-and-key-types"
+      )
+    )
   end)
 
   it("urls in python", function()

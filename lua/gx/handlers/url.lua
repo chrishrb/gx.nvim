@@ -18,11 +18,15 @@ function M.handle(mode, line, _)
     pattern = "([a-zA-Z%d_/%-%.~@\\+#]+%.[a-zA-Z_/%%%-%.~@\\+#=?&:]+)"
     url = helper.find(line, mode, pattern)
     if url then
-      return "https://" .. url
+      url = "https://" .. url
     end
   end
 
-  return url
+  if not url then
+    return
+  end
+
+  return url:gsub("\\([%p])", "%1")
 end
 
 return M
