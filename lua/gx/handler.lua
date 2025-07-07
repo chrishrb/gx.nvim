@@ -1,4 +1,6 @@
 local helper = require("gx.helper")
+
+local terraform_handler = require("gx.handlers.terraform")
 local brewfile_handler = require("gx.handlers.brewfile")
 local package_json_handler = require("gx.handlers.package_json")
 local plugin_handler = require("gx.handlers.plugin")
@@ -40,6 +42,7 @@ local function resolve_handlers(handlers)
   end
 
   -- ### add here new handlers
+  add_handler(resolved, terraform_handler, handlers.terraform and exists.terraform == nil)
   add_handler(resolved, brewfile_handler, handlers.brewfile and exists.brewfile == nil)
   add_handler(resolved, package_json_handler, handlers.package_json and exists.package_json == nil)
   add_handler(resolved, plugin_handler, handlers.plugin and exists.plugin == nil)
