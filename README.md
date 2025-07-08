@@ -52,6 +52,8 @@ require("lazy").setup({
         vim.fn.setreg("+", url) -- for example, you can set the url to clipboard here
       end,
 
+      select_prompt = true, -- shows a prompt when multiple handlers match; disable to auto-select the top one
+
       handlers = {
         plugin = true, -- open plugin links in lua (e.g. packer, lazy, ..)
         github = true, -- open github issues
