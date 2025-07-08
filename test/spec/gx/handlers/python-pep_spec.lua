@@ -1,0 +1,13 @@
+local handler = require("gx.handlers.python-pep")
+
+describe("python-pep_handler_does_work", function()
+  it("python-pep", function()
+    assert.equals("https://peps.python.org/pep-484", handler.handle("v", "# PEP-484"))
+  end)
+  it("python-pep", function()
+    assert.equals("https://peps.python.org/pep-484", handler.handle("v", "# PEP484"))
+  end)
+  it("python-pep", function()
+    assert.equals("https://peps.python.org/pep-484", handler.handle("v", "# PEP 484"))
+  end)
+end)

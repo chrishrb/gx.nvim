@@ -10,6 +10,7 @@ local go_handler = require("gx.handlers.go")
 local commit_handler = require("gx.handlers.commit")
 local markdown_handler = require("gx.handlers.markdown")
 local cve_handler = require("gx.handlers.cve")
+local python_pep_handler = require("gx.handlers.python-pep")
 local search_handler = require("gx.handlers.search")
 
 local M = {}
@@ -51,6 +52,7 @@ local function resolve_handlers(handlers)
   add_handler(resolved, go_handler, handlers.go and exists.go == nil)
   add_handler(resolved, markdown_handler, handlers.markdown and exists.markdown == nil)
   add_handler(resolved, cve_handler, handlers.cve and exists.cve == nil)
+  add_handler(resolved, python_pep_handler, handlers.python_pep and exists.python_pep == nil)
   add_handler(resolved, url_handler, handlers.url and exists.url == nil)
   add_handler(resolved, search_handler, handlers.search and exists.search == nil)
   -- ###
