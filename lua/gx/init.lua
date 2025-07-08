@@ -21,6 +21,7 @@ local M = {}
 ---@field open_browser_app string
 ---@field open_browser_args string[]
 ---@field open_callback boolean|function
+---@field select_prompt boolean
 ---@field handlers table<string, boolean|GxHandler>
 ---@field handler_options GxHandlerOptions
 
@@ -43,7 +44,7 @@ function M.open(mode, line)
 
   if #urls == 0 then
     return
-  elseif #urls == 1 then
+  elseif #urls == 1 or M.options.select_prompt == false then
     if M.options.open_callback then
       M.options.open_callback(urls[1].url)
     end
@@ -103,6 +104,7 @@ local function with_defaults(options)
   options.open_browser_args = options.open_browser_args or get_open_browser_args()
   options.open_callback = options.open_callback or false
   options.handlers = options.handlers or {}
+  options.select_prompt = options.select_prompt == nil and true or options.select_prompt
   options.handler_options = options.handler_options or {}
   options.handler_options.search_engine = options.handler_options.search_engine or "google"
   options.handler_options.select_for_search = options.handler_options.select_for_search or false
