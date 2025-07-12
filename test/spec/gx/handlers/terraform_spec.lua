@@ -16,6 +16,17 @@ describe("terraform_handler", function()
     )
   end)
 
+  it("aws datasources", function()
+    assert.equals(
+      "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/route",
+      handler.handle("v", 'data "aws_route" "example" {')
+    )
+    assert.equals(
+      "https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/region",
+      handler.handle("v", 'data "aws_region" "current" {')
+    )
+  end)
+
   it("azure resources", function()
     assert.equals(
       "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/resources/resource_group",
@@ -49,10 +60,16 @@ describe("terraform_handler", function()
     )
   end)
 
+  it("kubernetes datasources", function()
+    assert.equals(
+      "https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/data-sources/mutating_webhook_configuration_v1",
+      handler.handle("v", 'data "kubernetes_mutating_webhook_configuration_v1" "example" {')
+    )
+  end)
+
   it("non-terraform lines", function()
     assert.is_nil(handler.handle("v", "This is not a terraform resource"))
     assert.is_nil(handler.handle("v", 'variable "example" {'))
-    assert.is_nil(handler.handle("v", 'data "aws_ami" "example" {'))
     assert.is_nil(handler.handle("v", 'resource "unknown_provider_resource" "example" {'))
   end)
 end)
