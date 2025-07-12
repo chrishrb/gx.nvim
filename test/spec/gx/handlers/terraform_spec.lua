@@ -38,6 +38,17 @@ describe("terraform_handler", function()
     )
   end)
 
+  it("azure datasources", function()
+    assert.equals(
+      "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/location",
+      handler.handle("v", 'data "azurerm_location" "example" {')
+    )
+    assert.equals(
+      "https://registry.terraform.io/providers/hashicorp/azurerm/latest/docs/data-sources/resources",
+      handler.handle("v", 'data "azurerm_resources" "spokes" {')
+    )
+  end)
+
   it("google resources", function()
     assert.equals(
       "https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/compute_instance",
@@ -46,6 +57,13 @@ describe("terraform_handler", function()
     assert.equals(
       "https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/storage_bucket",
       handler.handle("v", 'resource "google_storage_bucket" "static" {')
+    )
+  end)
+
+  it("google datasources", function()
+    assert.equals(
+      "https://registry.terraform.io/providers/hashicorp/google/latest/docs/data-sources/compute_images",
+      handler.handle("v", 'data "google_compute_images" "example" {')
     )
   end)
 
