@@ -4,7 +4,7 @@ local helper = require("gx.helper")
 local M = {
   -- every filetype and filename
   name = "terraform",
-  filetype = { "hcl" },
+  filetype = { "hcl", "terraform" },
   filename = nil,
 }
 
