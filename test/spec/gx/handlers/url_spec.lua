@@ -46,10 +46,7 @@ describe("url_parser_does_work", function()
     )
     assert.equals(
       "https://crontab.guru/#0_3_*_*_*",
-      handler.handle(
-        "n",
-        "https://crontab.guru/#0_3_*_*_*"
-      )
+      handler.handle("n", "https://crontab.guru/#0_3_*_*_*")
     )
   end)
 
