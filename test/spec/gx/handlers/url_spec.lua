@@ -44,6 +44,10 @@ describe("url_parser_does_work", function()
         "https://golang-jwt.github.io/jwt/usage/signing\\_methods/#signing-methods-and-key-types"
       )
     )
+    assert.equals(
+      "https://crontab.guru/#0_3_*_*_*",
+      handler.handle("n", "https://crontab.guru/#0_3_*_*_*")
+    )
   end)
 
   it("urls in python", function()

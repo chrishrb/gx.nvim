@@ -10,7 +10,7 @@ local M = {
 
 -- get url from line (with http/s)
 function M.handle(mode, line, _)
-  local pattern = "(https?://[a-zA-Z%d_/%%%-%.~@\\+#=?&:]+)"
+  local pattern = "(https?://[a-zA-Z%d_/%%%-%.~@\\+#=?&:*]+)"
   local url = helper.find(line, mode, pattern)
 
   -- match url without http(s)
